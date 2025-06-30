@@ -1,0 +1,17 @@
+/.DS_Store
+/.idea/
+/backend/runtime/
+/backend/web/assets/
+/console/runtime/
+/frontend/runtime/
+/frontend/web/assets/
+/nbproject/
+/runtime/
+/tests/_output/
+/tests/_support/_generated/
+/vendor/
+
+.env
+Thumbs.db
+___*
+config/db.php
