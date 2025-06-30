@@ -15,3 +15,4 @@
 Thumbs.db
 ___*
 config/db.php
+/scripts/deploy_*.sh
