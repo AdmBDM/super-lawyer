@@ -11,5 +11,5 @@ $this->registerJsFile('@web/dist/js/main.min.js', ['depends' => [JqueryAsset::cl
 
 <?= $this->render('partials/_hero') ?>
 <?= $this->render('partials/_services') ?>
-<?= $this->render('partials/_cities') ?>
+<?php //= $this->render('partials/_cities') ?>
 <?= $this->render('partials/_trust') ?>
