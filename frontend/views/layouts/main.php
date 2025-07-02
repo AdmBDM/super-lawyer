@@ -1,84 +1,81 @@
 <?php
+/**
+ * @var yii\web\View $this
+ * @var string       $content
+ */
 
-/** @var \yii\web\View $this */
-/** @var string $content */
-
-use common\widgets\Alert;
 use frontend\assets\AppAsset;
-use yii\bootstrap5\Breadcrumbs;
 use yii\bootstrap5\Html;
 use yii\bootstrap5\Nav;
 use yii\bootstrap5\NavBar;
 
 AppAsset::register($this);
+
+// текущий город (по cookie или значению по умолчанию)
+$city = Yii::$app->request->cookies->getValue('city', 'Москва');
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
-<html lang="<?= Yii::$app->language ?>" class="h-100">
+<html lang="<?= Yii::$app->language ?>">
 <head>
-    <meta charset="<?= Yii::$app->charset ?>">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <?php $this->registerCsrfMetaTags() ?>
-    <title><?= Html::encode($this->title) ?></title>
+	<meta charset="<?= Yii::$app->charset ?>">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <?= Html::csrfMetaTags() ?>
+	<title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
 </head>
-<body class="d-flex flex-column h-100">
+<body>
 <?php $this->beginBody() ?>
 
+<!-- ===== Header & Navbar ===== -->
 <header>
     <?php
     NavBar::begin([
-        'brandLabel' => Yii::$app->name,
-        'brandUrl' => Yii::$app->homeUrl,
-        'options' => [
-            'class' => 'navbar navbar-expand-md navbar-dark bg-dark fixed-top',
-        ],
+        'brandLabel' => 'Super‑Lawyer',
+        'brandUrl'   => Yii::$app->homeUrl,
+        'options'    => ['class' => 'navbar navbar-expand-lg navbar-dark bg-dark fixed-top'],
     ]);
-    $menuItems = [
-        ['label' => 'Home', 'url' => ['/site/index']],
-        ['label' => 'About', 'url' => ['/site/about']],
-        ['label' => 'Contact', 'url' => ['/site/contact']],
-    ];
-    if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
-    }
 
     echo Nav::widget([
-        'options' => ['class' => 'navbar-nav me-auto mb-2 mb-md-0'],
-        'items' => $menuItems,
-    ]);
-    if (Yii::$app->user->isGuest) {
-        echo Html::tag('div',Html::a('Login',['/site/login'],['class' => ['btn btn-link login text-decoration-none']]),['class' => ['d-flex']]);
-    } else {
-        echo Html::beginForm(['/site/logout'], 'post', ['class' => 'd-flex'])
-            . Html::submitButton(
-                'Logout (' . Yii::$app->user->identity->username . ')',
-                ['class' => 'btn btn-link logout text-decoration-none']
+        'options' => ['class' => 'navbar-nav ms-auto align-items-lg-center'],
+        'items'   => [
+            ['label' => 'Услуги',   'url' => ['/site/index#services']],
+            ['label' => 'Города',   'url' => ['/site/index#cities']],
+            ['label' => 'О нас',    'url' => ['/site/about']],
+            ['label' => 'Контакты', 'url' => ['/site/contact']],
+            '<li class="nav-item d-none d-lg-block">'
+            .Html::dropDownList(
+                'city',
+                $city,
+                ['Москва' => 'Москва', 'Санкт‑Петербург' => 'Санкт‑Петербург', 'Екатеринбург' => 'Екатеринбург'],
+                ['class' => 'form-select form-select-sm', 'id' => 'citySelectNav']
             )
-            . Html::endForm();
-    }
+            .'</li>',
+            [
+                'label'       => 'Онлайн‑консультация',
+                'url'         => ['/site/index#hero'],
+                'linkOptions' => ['class' => 'btn btn-warning ms-lg-3 text-dark fw-semibold']
+            ],
+        ],
+    ]);
     NavBar::end();
     ?>
 </header>
 
-<main role="main" class="flex-shrink-0">
-    <div class="container">
-        <?= Breadcrumbs::widget([
-            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-        ]) ?>
-        <?= Alert::widget() ?>
-        <?= $content ?>
-    </div>
+<!-- ===== Main content (partials come here) ===== -->
+<main class="mt-5 pt-4">
+    <?= $content ?>
 </main>
 
-<footer class="footer mt-auto py-3 text-muted">
-    <div class="container">
-        <p class="float-start">&copy; <?= Html::encode(Yii::$app->name) ?> <?= date('Y') ?></p>
-        <p class="float-end"><?= Yii::powered() ?></p>
-    </div>
+<!-- ===== Footer ===== -->
+<footer class="footer-section py-4 bg-dark text-white mt-5">
+	<div class="container text-center small">
+		<p class="mb-1">&copy; <?= date('Y') ?> Super‑Lawyer. Все права защищены.</p>
+		<p class="mb-0">ООО «Супер-Юрист» · info@super-lawyer.ru</p>
+	</div>
 </footer>
 
 <?php $this->endBody() ?>
 </body>
 </html>
-<?php $this->endPage();
+<?php $this->endPage() ?>
