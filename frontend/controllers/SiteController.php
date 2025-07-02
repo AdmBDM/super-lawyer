@@ -15,7 +15,6 @@ use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
-use yii\web\Response;
 
 /**
  * Site controller
@@ -23,9 +22,9 @@ use yii\web\Response;
 class SiteController extends Controller
 {
     /**
-     * @return array[]
+     * {@inheritdoc}
      */
-    public function behaviors(): array
+    public function behaviors()
     {
         return [
             'access' => [
@@ -54,9 +53,9 @@ class SiteController extends Controller
     }
 
     /**
-     * @return array
+     * {@inheritdoc}
      */
-    public function actions(): array
+    public function actions()
     {
         return [
             'error' => [
@@ -72,9 +71,9 @@ class SiteController extends Controller
     /**
      * Displays homepage.
      *
-     * @return string
+     * @return mixed
      */
-    public function actionIndex(): string
+    public function actionIndex()
     {
         return $this->render('index');
     }
@@ -82,9 +81,9 @@ class SiteController extends Controller
     /**
      * Logs in a user.
      *
-     * @return string|Response
+     * @return mixed
      */
-    public function actionLogin(): Response|string
+    public function actionLogin()
     {
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
@@ -105,9 +104,9 @@ class SiteController extends Controller
     /**
      * Logs out the current user.
      *
-     * @return Response
+     * @return mixed
      */
-    public function actionLogout(): Response
+    public function actionLogout()
     {
         Yii::$app->user->logout();
 
@@ -117,9 +116,9 @@ class SiteController extends Controller
     /**
      * Displays contact page.
      *
-     * @return string|Response
+     * @return mixed
      */
-    public function actionContact(): Response|string
+    public function actionContact()
     {
         $model = new ContactForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
@@ -140,9 +139,9 @@ class SiteController extends Controller
     /**
      * Displays about page.
      *
-     * @return string
+     * @return mixed
      */
-    public function actionAbout(): string
+    public function actionAbout()
     {
         return $this->render('about');
     }
@@ -150,9 +149,9 @@ class SiteController extends Controller
     /**
      * Signs user up.
      *
-     * @return string|Response
+     * @return mixed
      */
-    public function actionSignup(): Response|string
+    public function actionSignup()
     {
         $model = new SignupForm();
         if ($model->load(Yii::$app->request->post()) && $model->signup()) {
@@ -168,9 +167,9 @@ class SiteController extends Controller
     /**
      * Requests password reset.
      *
-     * @return string|Response
+     * @return mixed
      */
-    public function actionRequestPasswordReset(): Response|string
+    public function actionRequestPasswordReset()
     {
         $model = new PasswordResetRequestForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
@@ -192,11 +191,10 @@ class SiteController extends Controller
      * Resets password.
      *
      * @param string $token
-     *
-     * @return string|Response
+     * @return mixed
      * @throws BadRequestHttpException
      */
-    public function actionResetPassword($token): Response|string
+    public function actionResetPassword($token)
     {
         try {
             $model = new ResetPasswordForm($token);
@@ -219,11 +217,10 @@ class SiteController extends Controller
      * Verify email address
      *
      * @param string $token
-     *
-     * @return Response
      * @throws BadRequestHttpException
+     * @return yii\web\Response
      */
-    public function actionVerifyEmail($token): Response
+    public function actionVerifyEmail($token)
     {
         try {
             $model = new VerifyEmailForm($token);
@@ -242,9 +239,9 @@ class SiteController extends Controller
     /**
      * Resend verification email
      *
-     * @return string|Response
+     * @return mixed
      */
-    public function actionResendVerificationEmail(): Response|string
+    public function actionResendVerificationEmail()
     {
         $model = new ResendVerificationEmailForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {

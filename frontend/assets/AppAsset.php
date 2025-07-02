@@ -9,10 +9,13 @@ use yii\web\AssetBundle;
  */
 class AppAsset extends AssetBundle
 {
-    public $basePath = '@webroot/dist';
-    public $baseUrl = '@web/dist';
-    public $css = ['css/main.min.css'];
-    public $js = ['js/main.min.js'];
+    public $basePath = '@webroot';
+    public $baseUrl = '@web';
+    public $css = [
+        'css/site.css',
+    ];
+    public $js = [
+    ];
     public $depends = [
         'yii\web\YiiAsset',
         'yii\bootstrap5\BootstrapAsset',
