@@ -21,8 +21,6 @@ $cityOptions = [
     'sch' => 'Сочи',
 ];
 
-// текущий город (по cookie или значению по умолчанию)
-//$slug = Yii::$app->request->cookies->getValue('city', 'msk');
 $this->title = Yii::$app->params['name'];
 
 ?>
