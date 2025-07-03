@@ -13,15 +13,17 @@ AppAsset::register($this);
 
 // текущий город (по cookie или значению по умолчанию)
 $city = Yii::$app->request->cookies->getValue('city', 'Москва');
+$this->title = Yii::$app->params['name'];
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
-<html lang="<?= Yii::$app->language ?>">
+<html lang="<?= Yii::$app->params['language'] ?>">
 <head>
 	<meta charset="<?= Yii::$app->charset ?>">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
     <?= Html::csrfMetaTags() ?>
 	<title><?= Html::encode($this->title) ?></title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
     <?php $this->head() ?>
 </head>
 <body>
@@ -31,33 +33,50 @@ $city = Yii::$app->request->cookies->getValue('city', 'Москва');
 <header>
     <?php
     NavBar::begin([
-        'brandLabel' => 'Super‑Lawyer',
-        'brandUrl'   => Yii::$app->homeUrl,
-        'options'    => ['class' => 'navbar navbar-expand-lg navbar-dark bg-dark fixed-top'],
+        'brandLabel' => Yii::$app->params['name'],
+        'brandUrl' => Yii::$app->homeUrl,
+        'options' => ['class' => 'navbar navbar-expand-lg navbar-dark bg-dark fixed-top'],
     ]);
 
+    // ВСТАВЛЯЕМ СЕЛЕКТОР ГОРОДА между логотипом и меню
+    echo Html::beginTag('div', ['class' => 'navbar-city-selector mx-3']);
+    echo '<div class="input-group input-group-sm">';
+    echo '<span class="input-group-text bg-light text-dark"><i class="bi bi-geo-alt-fill"></i></span>';
+    echo Html::dropDownList(
+        'city',
+        $city,
+        [
+            'Москва' => 'Москва',
+            'Санкт-Петербург' => 'Санкт-Петербург',
+            'Екатеринбург' => 'Екатеринбург',
+            'Новосибирск' => 'Новосибирск',
+            'Казань' => 'Казань',
+            'Сочи' => 'Сочи',
+        ],
+        [
+            'class' => 'form-select',
+            'id' => 'citySelectNav',
+        ]
+    );
+    echo '</div>';
+    echo Html::endTag('div');
+
+    // Пункты меню
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav ms-auto align-items-lg-center'],
-        'items'   => [
-            ['label' => 'Услуги',   'url' => ['/site/index#services']],
-            ['label' => 'Города',   'url' => ['/site/index#cities']],
-            ['label' => 'О нас',    'url' => ['/site/about']],
+        'items' => [
+            ['label' => 'Услуги', 'url' => ['/site/index#services']],
+            ['label' => 'Города', 'url' => ['/site/index#cities']],
+            ['label' => 'О нас', 'url' => ['/site/about']],
             ['label' => 'Контакты', 'url' => ['/site/contact']],
-            '<li class="nav-item d-none d-lg-block">'
-            .Html::dropDownList(
-                'city',
-                $city,
-                ['Москва' => 'Москва', 'Санкт‑Петербург' => 'Санкт‑Петербург', 'Екатеринбург' => 'Екатеринбург', 'Казань' => 'Казань'],
-                ['class' => 'form-select form-select-sm', 'id' => 'citySelectNav']
-            )
-            .'</li>',
             [
-                'label'       => 'Онлайн‑консультация',
-                'url'         => ['/site/index#hero'],
+                'label' => 'Онлайн‑консультация',
+                'url' => ['/site/index#hero'],
                 'linkOptions' => ['class' => 'btn btn-warning ms-lg-3 text-dark fw-semibold']
             ],
         ],
     ]);
+
     NavBar::end();
     ?>
 </header>
