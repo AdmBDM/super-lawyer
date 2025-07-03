@@ -270,7 +270,7 @@ class SiteController extends Controller
      */
     public function actionSetCity($slug): Response
     {
-        $allowedSlugs = ['msk', 'spb', 'ekb', 'nsk', 'kzn', 'sch'];
+        file_put_contents(__DIR__.'/../../runtime/logs/city.log', date('c')." – пришёл slug = $slug\n", FILE_APPEND);        $allowedSlugs = ['msk', 'spb', 'ekb', 'nsk', 'kzn', 'sch'];
         if (!in_array($slug, $allowedSlugs)) {
             $slug = 'msk'; // fallback
         }
