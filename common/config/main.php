@@ -2,7 +2,6 @@
 return [
     'language' => 'ru-RU',
     'sourceLanguage' => 'ru-RU',
-    'name' => 'Супер-Юрист',
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
