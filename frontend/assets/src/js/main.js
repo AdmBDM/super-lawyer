@@ -11,13 +11,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
 	if (citySelect) {
 		citySelect.addEventListener('change', function () {
-			const selectedCity = this.value;
+			const slug = this.value;
 
 			// Сохраняем в cookie на 30 дней
 			// document.cookie = `city=${encodeURIComponent(selectedCity)}; path=/; max-age=${30 * 24 * 60 * 60}`;
 
 			// ↙️  убираем encodeURIComponent
-			document.cookie = `city=${selectedCity}; path=/; max-age=${30*24*60*60}; SameSite=Lax`;
+			document.cookie = `city=${slug}; path=/; max-age=${30*24*60*60}; SameSite=Lax`;
 
 			// Обновляем страницу
 			location.reload();

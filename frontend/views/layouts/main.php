@@ -11,9 +11,20 @@ use yii\bootstrap5\NavBar;
 
 AppAsset::register($this);
 
+// карта slug => красивое название
+$cityOptions = [
+    'msk' => 'Москва',
+    'spb' => 'Санкт‑Петербург',
+    'ekb' => 'Екатеринбург',
+    'nsk' => 'Новосибирск',
+    'kzn' => 'Казань',
+    'sch' => 'Сочи',
+];
+
 // текущий город (по cookie или значению по умолчанию)
-$city = Yii::$app->request->cookies->getValue('city', 'Москва');
+$slug = Yii::$app->request->cookies->getValue('city', 'msk');
 $this->title = Yii::$app->params['name'];
+
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -44,15 +55,8 @@ $this->title = Yii::$app->params['name'];
     echo '<span class="input-group-text bg-light text-dark"><i class="bi bi-geo-alt-fill"></i></span>';
     echo Html::dropDownList(
         'city',
-        $city,
-        [
-            'Москва' => 'Москва',
-            'Санкт-Петербург' => 'Санкт-Петербург',
-            'Екатеринбург' => 'Екатеринбург',
-            'Новосибирск' => 'Новосибирск',
-            'Казань' => 'Казань',
-            'Сочи' => 'Сочи',
-        ],
+        $slug,
+        $cityOptions,
         [
             'class' => 'form-select',
             'id' => 'citySelectNav',
