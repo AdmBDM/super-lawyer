@@ -22,7 +22,7 @@ $cityOptions = [
 ];
 
 // текущий город (по cookie или значению по умолчанию)
-$slug = Yii::$app->request->cookies->getValue('city', 'msk');
+//$slug = Yii::$app->request->cookies->getValue('city', 'msk');
 $this->title = Yii::$app->params['name'];
 
 ?>
@@ -43,6 +43,10 @@ $this->title = Yii::$app->params['name'];
 <!-- ===== Header & Navbar ===== -->
 <header>
     <?php
+    // ⚠️  Берём slug напрямую из $_COOKIE
+    $slug = isset($_COOKIE['city']) ? preg_replace('/[^a-z]/', '', $_COOKIE['city']) : 'msk';
+    $currentCity = $cityOptions[$slug] ?? 'Москва';
+
     NavBar::begin([
         'brandLabel' => Yii::$app->params['name'],
         'brandUrl' => Yii::$app->homeUrl,
