@@ -16,6 +16,7 @@ use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
+use yii\web\Cookie;
 use yii\web\ErrorAction;
 use yii\web\Response;
 
@@ -261,4 +262,29 @@ class SiteController extends Controller
             'model' => $model
         ]);
     }
+
+    /**
+     * @param $slug
+     *
+     * @return Response
+     */
+    public function actionSetCity($slug): Response
+    {
+        $allowedSlugs = ['msk', 'spb', 'ekb', 'nsk', 'kzn', 'sch'];
+        if (!in_array($slug, $allowedSlugs)) {
+            $slug = 'msk'; // fallback
+        }
+
+        Yii::$app->response->cookies->add(new Cookie([
+            'name'   => 'city',
+            'value'  => $slug,
+            'path'   => '/',
+            'domain' => Yii::$app->request->hostName,
+            'expire' => time() + 30*24*60*60, // 30 дней
+            'httpOnly' => false,
+        ]));
+
+        return $this->goBack(Yii::$app->request->referrer ?: ['/']);
+    }
+
 }
