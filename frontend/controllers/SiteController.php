@@ -266,9 +266,9 @@ class SiteController extends Controller
     /**
      * @param $slug
      *
-     * @return Response
+     * @return void
      */
-    public function actionSetCity($slug = 'msk'): Response
+    public function actionSetCity($slug = 'msk')
     {
         // *** ТЕСТ: если попали сюда, увидите эту надпись ***
         die("SET‑CITY ACTION СРАБОТАЛ: slug = $slug");
