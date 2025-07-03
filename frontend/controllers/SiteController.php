@@ -268,9 +268,13 @@ class SiteController extends Controller
      *
      * @return Response
      */
-    public function actionSetCity($slug): Response
+    public function actionSetCity($slug = 'msk'): Response
     {
+        // *** ТЕСТ: если попали сюда, увидите эту надпись ***
+        die("SET‑CITY ACTION СРАБОТАЛ: slug = $slug");
+
         file_put_contents(__DIR__.'/../../runtime/logs/city.log', date('c')." – пришёл slug = $slug\n", FILE_APPEND);        $allowedSlugs = ['msk', 'spb', 'ekb', 'nsk', 'kzn', 'sch'];
+
         if (!in_array($slug, $allowedSlugs)) {
             $slug = 'msk'; // fallback
         }
