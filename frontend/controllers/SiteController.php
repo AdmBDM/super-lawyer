@@ -266,29 +266,39 @@ class SiteController extends Controller
     /**
      * @param $slug
      *
-     * @return void
      */
     public function actionSetCity($slug = 'msk')
     {
-        // *** ТЕСТ: если попали сюда, увидите эту надпись ***
-        die("SET‑CITY ACTION СРАБОТАЛ: slug = $slug");
-
-        file_put_contents(__DIR__.'/../../runtime/logs/city.log', date('c')." – пришёл slug = $slug\n", FILE_APPEND);        $allowedSlugs = ['msk', 'spb', 'ekb', 'nsk', 'kzn', 'sch'];
-
-        if (!in_array($slug, $allowedSlugs)) {
-            $slug = 'msk'; // fallback
+        // допустимые слуги
+        $allowed = ['msk','spb','ekb','nsk','kzn','sch'];
+        if (!in_array($slug, $allowed)) {
+            $slug = 'msk';
         }
 
-        Yii::$app->response->cookies->add(new Cookie([
+        $cookies = Yii::$app->response->cookies;
+
+        // ❌ сначала удаляем ВСЕ варианты 'city'
+        $cookies->remove('city'); // удалит вариант без домена
+        // удаляем вариант с точкой перед доменом
+        Yii::$app->response->cookies->add(new yii\web\Cookie([
+            'name'   => 'city',
+            'value'  => '',
+            'path'   => '/',
+            'domain' => '.' . Yii::$app->request->hostName,
+            'expire' => time() - 3600,        // просрочить
+        ]));
+
+        // ✅ теперь добавляем ОДНУ правильную cookie
+        $cookies->add(new yii\web\Cookie([
             'name'   => 'city',
             'value'  => $slug,
             'path'   => '/',
-            'domain' => Yii::$app->request->hostName,
-            'expire' => time() + 30*24*60*60, // 30 дней
+            'domain' => '.' . Yii::$app->request->hostName, // с точкой
+            'expire' => time() + 30*24*60*60,
             'httpOnly' => false,
         ]));
 
-        return $this->goBack(Yii::$app->request->referrer ?: ['/']);
+        return $this->redirect(Yii::$app->request->referrer ?: ['/']);
     }
 
 }

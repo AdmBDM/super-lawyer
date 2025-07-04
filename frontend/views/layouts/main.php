@@ -42,8 +42,13 @@ $this->title = Yii::$app->params['name'];
 <header>
     <?php
     // ⚠️  Берём slug напрямую из $_COOKIE
-    $slug = isset($_COOKIE['city']) ? preg_replace('/[^a-z]/', '', $_COOKIE['city']) : 'msk';
+    $slug = preg_replace(
+        '/[^a-z]/',
+        '',
+        Yii::$app->request->cookies->getValue('city', 'msk')
+    );
     $currentCity = $cityOptions[$slug] ?? 'Москва';
+	echo '<script>console.log(\' ~~~ \', ' . $slug . ');</script>';
 
     NavBar::begin([
         'brandLabel' => Yii::$app->params['name'],
