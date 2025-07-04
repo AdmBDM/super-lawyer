@@ -23,26 +23,6 @@ body {
 	}
 }
 
-//.hero {
-//	background: #3f51b5;
-//	color: #fff;
-//	padding: 80px 20px;
-//	text-align: center;
-//
-//	h1 {
-//		font-size: 2.5rem;
-//		font-weight: bold;
-//	}
-//
-//	.btn-primary {
-//		background-color: #ffcc00;
-//		color: #000;
-//		&:hover {
-//			background-color: darken(#ffcc00, 10%);
-//		}
-//	}
-//}
-
 .hero-section {
 	background: linear-gradient(to right, #004080, #0078d7);
 	color: #fff;
@@ -62,6 +42,19 @@ body {
 	.btn {
 		font-weight: 600;
 		padding: 0.75rem 2rem;
+	}
+}
+
+.services-section {
+	.card {
+		transition: transform .15s ease;
+		&:hover {
+			transform: translateY(-4px);
+			box-shadow: 0 6px 18px rgba(0, 0, 0, .12);
+		}
+	}
+	.card-title {
+		font-weight: 600;
 	}
 }
 

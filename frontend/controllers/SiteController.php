@@ -79,6 +79,16 @@ class SiteController extends Controller
      */
     public function actionIndex(): string
     {
+        $services = [
+            // slug => [название, краткое описание]
+            'trudovoe-pravo' => ['Трудовое право',       'Восстановление на работе, взыскание зарплаты'],
+            'semeynoe-pravo' => ['Семейное право',       'Развод, алименты, раздел имущества'],
+            'avtojurist'     => ['Автоюрист',            'ДТП, лишение прав, споры со страховой'],
+            'ugolovnoe'      => ['Уголовные дела',       'Защита на всех стадиях процесса'],
+            'zhilishchnoe'   => ['Жилищные вопросы',     'Квартирные споры, ЖКХ, собственность'],
+            'finansy'        => ['Финансовые споры',     'Долги, банкротство, арбитраж'],
+        ];
+
         // карта slug => название
         $cityOptions = [
             'msk' => 'Москва',
@@ -96,7 +106,8 @@ class SiteController extends Controller
         // ⬇ передаём переменные во view:
         return $this->render('index', [
             'currentCity' => $currentCity,
-            'citySlug'    => $slug,          // пригодится позже
+            'citySlug'    => $slug,
+            'services'    => $services,
         ]);
     }
 
