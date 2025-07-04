@@ -1,15 +1,13 @@
 <?php
+/** @var string $currentCity */
+/** @var string $citySlug   */
+
 use yii\helpers\Html;
-use yii\web\JqueryAsset;
 
-/** @var yii\web\View $this */
-$this->title = 'Юридическая онлайн-помощь в вашем городе';
-$this->registerCssFile('@web/dist/css/main.min.css');
-$this->registerJsFile('@web/dist/js/main.min.js', ['depends' => [JqueryAsset::class]]);
-
+$this->title = 'Юрист онлайн — ' . Html::encode($currentCity);
 ?>
 
-<?= $this->render('partials/_hero') ?>
-<?= $this->render('partials/_services') ?>
-<?php //= $this->render('partials/_cities') ?>
+<?= $this->render('partials/_hero', ['city' => $currentCity]) ?>
+<?= $this->render('partials/_services', ['city' => $currentCity, 'slug'=>$citySlug]) ?>
+<?= $this->render('partials/_cities',  ['city' => $currentCity]) ?>
 <?= $this->render('partials/_trust') ?>

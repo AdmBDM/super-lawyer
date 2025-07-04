@@ -79,7 +79,25 @@ class SiteController extends Controller
      */
     public function actionIndex(): string
     {
-        return $this->render('index');
+        // карта slug => название
+        $cityOptions = [
+            'msk' => 'Москва',
+            'spb' => 'Санкт‑Петербург',
+            'ekb' => 'Екатеринбург',
+            'nsk' => 'Новосибирск',
+            'kzn' => 'Казань',
+            'sch' => 'Сочи',
+        ];
+
+        // читаем slug из куки         (Yii‑способ!)
+        $slug = \Yii::$app->request->cookies->getValue('city', 'msk');
+        $currentCity = $cityOptions[$slug] ?? 'Москва';
+
+        // ⬇ передаём переменные во view:
+        return $this->render('index', [
+            'currentCity' => $currentCity,
+            'citySlug'    => $slug,          // пригодится позже
+        ]);
     }
 
     /**
