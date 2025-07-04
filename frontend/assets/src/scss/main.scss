@@ -58,3 +58,23 @@ body {
 	}
 }
 
+.cities-grid {
+	background: #f8f9fa;
+
+	h2 {
+		font-weight: 600;
+		font-size: 1.75rem;
+	}
+
+	.btn {
+		font-weight: 500;
+		transition: all 0.15s ease;
+		&:hover {
+			background-color: #0d6efd;
+			color: white;
+			border-color: #0d6efd;
+		}
+	}
+}
+
+

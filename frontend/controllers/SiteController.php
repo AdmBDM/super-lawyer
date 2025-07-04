@@ -108,6 +108,7 @@ class SiteController extends Controller
             'currentCity' => $currentCity,
             'citySlug'    => $slug,
             'services'    => $services,
+            'cityOptions' => $cityOptions,
         ]);
     }
 
@@ -293,10 +294,11 @@ class SiteController extends Controller
     }
 
     /**
-     * @param $slug
+     * @param string $slug
      *
+     * @return Response
      */
-    public function actionSetCity($slug = 'msk')
+    public function actionSetCity(string $slug = 'msk'): Response
     {
         // допустимые слуги
         $allowed = ['msk','spb','ekb','nsk','kzn','sch'];
