@@ -48,7 +48,8 @@ $this->title = Yii::$app->params['name'];
         Yii::$app->request->cookies->getValue('city', 'msk')
     );
     $currentCity = $cityOptions[$slug] ?? 'Москва';
-	echo '<script>console.log(\' ~~~ \', ' . $slug . ');</script>';
+    // Пробрасываем $currentCity глобально во вьюхи
+	Yii::$app->view->params['currentCity'] = $currentCity;
 
     NavBar::begin([
         'brandLabel' => Yii::$app->params['name'],
