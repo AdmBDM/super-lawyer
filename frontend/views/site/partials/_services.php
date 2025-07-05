@@ -11,7 +11,6 @@ use yii\helpers\Html;
 <section id="services" class="services-section py-5">
 	<div class="container">
 		<h2 class="mb-4 text-center">
-<!--			Наши юридические услуги в --><?php //= Html::encode($currentCity->dative) ?>
 			Наши юридические услуги в <?= $currentCity->dative ?>
 		</h2>
 

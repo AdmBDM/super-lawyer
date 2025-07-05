@@ -8,8 +8,7 @@ use yii\helpers\Html;
 <section class="hero-section py-5 text-center text-white bg-primary">
 	<div class="container">
 		<h1 class="display-4 mb-3">
-<!--			Юрист онлайн в --><?php //= Html::encode($currentCity->genitive) ?>
-			Юрист онлайн в <?= $currentCity->genitive ?>
+			Юрист онлайн в <?= $currentCity->dative ?>
 		</h1>
 		<p class="lead mb-4">
 			Срочная помощь по всем видам права — круглосуточно, без визита в офис
