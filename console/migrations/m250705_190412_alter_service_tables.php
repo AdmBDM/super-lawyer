@@ -5,7 +5,7 @@ use yii\db\Migration;
  * Добавляет is_fiz / is_jur и переводит body → jsonb
  * в таблицах service и service_city.
  */
-class m240705_010000_alter_service_tables extends Migration
+class m250705_190412_alter_service_tables extends Migration
 {
     private const T_SERVICE      = '{{%service}}';
     private const T_SERVICECITY  = '{{%service_city}}';
@@ -61,7 +61,7 @@ class m240705_010000_alter_service_tables extends Migration
 
     public function safeDown()
     {
-        echo "m240705_010000_alter_service_tables cannot be reverted.\n";
+        echo "m250705_190412_alter_service_tables cannot be reverted.\n";
         return false;
     }
 }
