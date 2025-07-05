@@ -145,7 +145,7 @@ class SiteController extends Controller
 //                ['sc' => ServiceCity::tableName()],
 //                'sc.service_id = s.id AND sc.city_id = :cid AND sc.is_active = true'
 //            )
-            ->leftJoin(
+            ->rightJoin(
                 ['sc' => ServiceCity::tableName()],
                 'sc.service_id = s.id AND sc.city_id = :cid AND coalesce(sc.is_active, true) = true'
             )
