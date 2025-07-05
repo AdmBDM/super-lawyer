@@ -8,21 +8,24 @@ use frontend\assets\AppAsset;
 use yii\bootstrap5\Html;
 use yii\bootstrap5\Nav;
 use yii\bootstrap5\NavBar;
+use yii\helpers\ArrayHelper;
+
+/** @var common\models\City        $currentCity  (из beforeAction) */
+/** @var common\models\City[]|null $cityList     (из beforeAction) */
 
 AppAsset::register($this);
 
-// карта slug => красивое название
-$cityOptions = [
-    'msk' => 'Москва',
-    'spb' => 'Санкт‑Петербург',
-    'ekb' => 'Екатеринбург',
-    'nsk' => 'Новосибирск',
-    'kzn' => 'Казань',
-    'sch' => 'Сочи',
-];
+/* — данные для селектора — */
+$currentCity = Yii::$app->view->params['currentCity'] ?? null;
+$cityList    = Yii::$app->view->params['cityList']   ?? [];
+
+/* если почему‑то пусто — подстраховка */
+if (!$currentCity) {
+    $currentCity = reset($cityList);           // первый активный город
+}
+$citySlug = $currentCity?->slug ?? 'msk';
 
 $this->title = Yii::$app->params['name'];
-
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -41,49 +44,36 @@ $this->title = Yii::$app->params['name'];
 <!-- ===== Header & Navbar ===== -->
 <header>
     <?php
-    // ⚠️  Берём slug напрямую из $_COOKIE
-    $slug = preg_replace(
-        '/[^a-z]/',
-        '',
-        Yii::$app->request->cookies->getValue('city', 'msk')
-    );
-    $currentCity = $cityOptions[$slug] ?? 'Москва';
-    // Пробрасываем $currentCity глобально во вьюхи
-	Yii::$app->view->params['currentCity'] = $currentCity;
-
     NavBar::begin([
         'brandLabel' => Yii::$app->params['name'],
-        'brandUrl' => Yii::$app->homeUrl,
-        'options' => ['class' => 'navbar navbar-expand-lg navbar-dark bg-dark fixed-top'],
+        'brandUrl'   => Yii::$app->homeUrl,
+        'options'    => ['class' => 'navbar navbar-expand-lg navbar-dark bg-dark fixed-top'],
     ]);
 
-    // ВСТАВЛЯЕМ СЕЛЕКТОР ГОРОДА между логотипом и меню
+    /* — селектор города — */
     echo Html::beginTag('div', ['class' => 'navbar-city-selector mx-3']);
     echo '<div class="input-group input-group-sm">';
     echo '<span class="input-group-text bg-light text-dark"><i class="bi bi-geo-alt-fill"></i></span>';
     echo Html::dropDownList(
         'city',
-        $slug,
-        $cityOptions,
-        [
-            'class' => 'form-select',
-            'id' => 'citySelectNav',
-        ]
+        $citySlug,
+        ArrayHelper::map($cityList, 'slug', 'name'),
+        ['class' => 'form-select', 'id' => 'citySelectNav']
     );
     echo '</div>';
     echo Html::endTag('div');
 
-    // Пункты меню
+    /* — пункты меню — */
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav ms-auto align-items-lg-center'],
-        'items' => [
-            ['label' => 'Услуги', 'url' => ['/site/index#services']],
-            ['label' => 'Города', 'url' => ['/site/index#cities']],
-            ['label' => 'О нас', 'url' => ['/site/about']],
+        'items'   => [
+            ['label' => 'Услуги',   'url' => ['/site/index#services']],
+            ['label' => 'Города',   'url' => ['/site/index#cities']],
+            ['label' => 'О нас',    'url' => ['/site/about']],
             ['label' => 'Контакты', 'url' => ['/site/contact']],
             [
-                'label' => 'Онлайн‑консультация',
-                'url' => ['/site/index#hero'],
+                'label'       => 'Онлайн‑консультация',
+                'url'         => ['/site/index#hero'],
                 'linkOptions' => ['class' => 'btn btn-warning ms-lg-3 text-dark fw-semibold']
             ],
         ],
@@ -93,7 +83,7 @@ $this->title = Yii::$app->params['name'];
     ?>
 </header>
 
-<!-- ===== Main content (partials come here) ===== -->
+<!-- ===== Main content ===== -->
 <main class="mt-5 pt-4">
     <?= $content ?>
 </main>
@@ -102,7 +92,7 @@ $this->title = Yii::$app->params['name'];
 <footer class="footer-section py-4 bg-dark text-white mt-5">
 	<div class="container text-center small">
 		<p class="mb-1">&copy; <?= date('Y') ?> Super‑Lawyer. Все права защищены.</p>
-		<p class="mb-0">ООО «Супер-Юрист» · info@super-lawyer.ru</p>
+		<p class="mb-0">ООО «Супер‑Юрист» · info@super-lawyer.ru</p>
 	</div>
 </footer>
 

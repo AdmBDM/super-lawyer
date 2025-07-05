@@ -2,20 +2,23 @@
 
 namespace frontend\controllers;
 
-use frontend\models\ResendVerificationEmailForm;
-use frontend\models\VerifyEmailForm;
+use common\models\Service;
 use Yii;
-use yii\base\InvalidArgumentException;
-use yii\captcha\CaptchaAction;
-use yii\web\BadRequestHttpException;
-use yii\web\Controller;
-use yii\filters\VerbFilter;
-use yii\filters\AccessControl;
+use common\models\City;
 use common\models\LoginForm;
+use frontend\models\ContactForm;
 use frontend\models\PasswordResetRequestForm;
+use frontend\models\ResendVerificationEmailForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
-use frontend\models\ContactForm;
+use frontend\models\VerifyEmailForm;
+use yii\base\InvalidArgumentException;
+use yii\captcha\CaptchaAction;
+use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
+use yii\helpers\ArrayHelper;
+use yii\web\BadRequestHttpException;
+use yii\web\Controller;
 use yii\web\Cookie;
 use yii\web\ErrorAction;
 use yii\web\Response;
@@ -57,6 +60,49 @@ class SiteController extends Controller
     }
 
     /**
+     * @param $action
+     *
+     * @return bool
+     * @throws BadRequestHttpException
+     */
+    public function beforeAction($action): bool
+    {
+        /* 1. Получаем slug из cookies */
+        $slug = Yii::$app->request->cookies->getValue('city', null);
+
+        /* 2. Достаём город из БД */
+        $currentCity = City::find()
+            ->where(['slug' => $slug, 'is_active' => true])
+            ->one();
+
+        /* 3. Если куки нет или город неактивен — выбираем первый город по умолчанию */
+        if (!$currentCity) {
+            $currentCity = City::find()
+                ->where(['is_active' => true])
+                ->orderBy(['id' => SORT_ASC])
+                ->one();
+            // кладём корректную куку, чтобы больше не было «пусто»
+            Yii::$app->response->cookies->add(new yii\web\Cookie([
+                'name'   => 'city',
+                'value'  => $currentCity->slug,
+                'path'   => '/',
+                'domain' => '.'.Yii::$app->request->hostName,
+                'expire' => time() + 30*24*60*60,
+            ]));
+        }
+
+        /* 4. Передаём в представления */
+        Yii::$app->view->params['currentCity'] = $currentCity;
+        Yii::$app->view->params['cityList']    = City::find()
+            ->where(['in_location' => true, 'is_active' => true])
+            ->orderBy(['name' => SORT_ASC])
+            ->all();
+
+        return parent::beforeAction($action);
+    }
+
+
+    /**
      * @return array
      */
     public function actions(): array
@@ -79,36 +125,34 @@ class SiteController extends Controller
      */
     public function actionIndex(): string
     {
-        $services = [
-            // slug => [название, краткое описание]
-            'trudovoe-pravo' => ['Трудовое право',       'Восстановление на работе, взыскание зарплаты'],
-            'semeynoe-pravo' => ['Семейное право',       'Развод, алименты, раздел имущества'],
-            'avtojurist'     => ['Автоюрист',            'ДТП, лишение прав, споры со страховой'],
-            'ugolovnoe'      => ['Уголовные дела',       'Защита на всех стадиях процесса'],
-            'zhilishchnoe'   => ['Жилищные вопросы',     'Квартирные споры, ЖКХ, собственность'],
-            'finansy'        => ['Финансовые споры',     'Долги, банкротство, арбитраж'],
-        ];
+        /* 1.  Берём текущий город и список городов
+               (они уже положены в beforeAction) */
+        /** @var City   $currentCity */
+        /** @var City[] $cityList   */
+        $currentCity = Yii::$app->view->params['currentCity'];
+        $cityList    = Yii::$app->view->params['cityList'];   // для блока «другие города»
 
-        // карта slug => название
-        $cityOptions = [
-            'msk' => 'Москва',
-            'spb' => 'Санкт‑Петербург',
-            'ekb' => 'Екатеринбург',
-            'nsk' => 'Новосибирск',
-            'kzn' => 'Казань',
-            'sch' => 'Сочи',
-        ];
+        /* 2.  Берём все активные услуги */
+        $servicesAR = Service::find()
+            ->where(['is_active' => true])
+            ->orderBy(['title' => SORT_ASC])
+            ->all();
 
-        // читаем slug из куки         (Yii‑способ!)
-        $slug = \Yii::$app->request->cookies->getValue('city', 'msk');
-        $currentCity = $cityOptions[$slug] ?? 'Москва';
+        /* 3.  Приводим к массиву ['slug' => [title, lead]] — если нужно,
+               либо прямо передаём AR‑объекты во view */
+        $services = ArrayHelper::map(
+            $servicesAR,
+            'slug',
+            function (Service $s) {
+                return [$s->title, $s->lead ?: ''];
+            }
+        );
 
-        // ⬇ передаём переменные во view:
         return $this->render('index', [
-            'currentCity' => $currentCity,
-            'citySlug'    => $slug,
+            'currentCity' => $currentCity->name,
+            'citySlug'    => $currentCity->slug,
             'services'    => $services,
-            'cityOptions' => $cityOptions,
+            'cityOptions' => ArrayHelper::map($cityList, 'slug', 'name'), // для блока grid
         ]);
     }
 
@@ -300,36 +344,49 @@ class SiteController extends Controller
      */
     public function actionSetCity(string $slug = 'msk'): Response
     {
-        // допустимые слуги
-        $allowed = ['msk','spb','ekb','nsk','kzn','sch'];
-        if (!in_array($slug, $allowed)) {
-            $slug = 'msk';
+
+        $city = City::findOne(['slug' => $slug, 'is_active' => true]);
+        if ($city) {
+            Yii::$app->response->cookies->add(new yii\web\Cookie([
+                'name'   => 'city',
+                'value'  => $slug,
+                'path'   => '/',
+                'domain' => '.'.Yii::$app->request->hostName,
+                'expire' => time() + 30*24*60*60,
+            ]));
         }
-
-        $cookies = Yii::$app->response->cookies;
-
-        // ❌ сначала удаляем ВСЕ варианты 'city'
-        $cookies->remove('city'); // удалит вариант без домена
-        // удаляем вариант с точкой перед доменом
-        Yii::$app->response->cookies->add(new yii\web\Cookie([
-            'name'   => 'city',
-            'value'  => '',
-            'path'   => '/',
-            'domain' => '.' . Yii::$app->request->hostName,
-            'expire' => time() - 3600,        // просрочить
-        ]));
-
-        // ✅ теперь добавляем ОДНУ правильную cookie
-        $cookies->add(new yii\web\Cookie([
-            'name'   => 'city',
-            'value'  => $slug,
-            'path'   => '/',
-            'domain' => '.' . Yii::$app->request->hostName, // с точкой
-            'expire' => time() + 30*24*60*60,
-            'httpOnly' => false,
-        ]));
-
         return $this->redirect(Yii::$app->request->referrer ?: ['/']);
+
+//        // допустимые слуги
+//        $allowed = ['msk','spb','ekb','nsk','kzn','sch'];
+//        if (!in_array($slug, $allowed)) {
+//            $slug = 'msk';
+//        }
+//
+//        $cookies = Yii::$app->response->cookies;
+//
+//        // ❌ сначала удаляем ВСЕ варианты 'city'
+//        $cookies->remove('city'); // удалит вариант без домена
+//        // удаляем вариант с точкой перед доменом
+//        Yii::$app->response->cookies->add(new yii\web\Cookie([
+//            'name'   => 'city',
+//            'value'  => '',
+//            'path'   => '/',
+//            'domain' => '.' . Yii::$app->request->hostName,
+//            'expire' => time() - 3600,        // просрочить
+//        ]));
+//
+//        // ✅ теперь добавляем ОДНУ правильную cookie
+//        $cookies->add(new yii\web\Cookie([
+//            'name'   => 'city',
+//            'value'  => $slug,
+//            'path'   => '/',
+//            'domain' => '.' . Yii::$app->request->hostName, // с точкой
+//            'expire' => time() + 30*24*60*60,
+//            'httpOnly' => false,
+//        ]));
+//
+//        return $this->redirect(Yii::$app->request->referrer ?: ['/']);
     }
 
 }
