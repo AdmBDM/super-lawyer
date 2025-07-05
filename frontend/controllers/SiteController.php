@@ -125,6 +125,16 @@ class SiteController extends Controller
      */
     public function actionIndex(): string
     {
+        $services = [
+            // slug => [название, краткое описание]
+            'trudovoe-pravo' => ['Трудовое право',       'Восстановление на работе, взыскание зарплаты'],
+            'semeynoe-pravo' => ['Семейное право',       'Развод, алименты, раздел имущества'],
+            'avtojurist'     => ['Автоюрист',            'ДТП, лишение прав, споры со страховой'],
+            'ugolovnoe'      => ['Уголовные дела',       'Защита на всех стадиях процесса'],
+            'zhilishchnoe'   => ['Жилищные вопросы',     'Квартирные споры, ЖКХ, собственность'],
+            'finansy'        => ['Финансовые споры',     'Долги, банкротство, арбитраж'],
+        ];
+
         /* 1.  Берём текущий город и список городов
                (они уже положены в beforeAction) */
         /** @var City   $currentCity */
@@ -149,7 +159,7 @@ class SiteController extends Controller
         );
 
         return $this->render('index', [
-            'currentCity' => $currentCity->name,
+            'currentCity' => $currentCity,
             'citySlug'    => $currentCity->slug,
             'services'    => $services,
             'cityOptions' => ArrayHelper::map($cityList, 'slug', 'name'), // для блока grid

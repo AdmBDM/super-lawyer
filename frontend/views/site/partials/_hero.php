@@ -1,11 +1,14 @@
 <?php
+
+use common\models\City;
 use yii\helpers\Html;
-/** @var string $city */
+
+/** @var City $city */
 ?>
 <section class="hero-section py-5 text-center text-white bg-primary">
 	<div class="container">
 		<h1 class="display-4 mb-3">
-			Юрист онлайн в г.<?= Html::encode($city) ?>
+			Юрист онлайн в <?= Html::encode($city->genitive) ?>
 		</h1>
 		<p class="lead mb-4">
 			Срочная помощь по всем видам права — круглосуточно, без визита в офис
