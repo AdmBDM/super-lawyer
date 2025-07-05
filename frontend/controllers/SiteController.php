@@ -152,9 +152,9 @@ class SiteController extends Controller
             ->select([
                 'id'         => 's.id',
                 'slug'       => 's.slug',
-
+                'title'      => 's.title',
                 // приоритет: sc.*  →  s.*
-                new Expression('COALESCE(sc.title,        s.title)        AS title'),
+                new Expression('COALESCE(sc.h1,           s.h1)           AS h1'),
                 new Expression('COALESCE(sc.lead,         s.lead)         AS lead'),
                 new Expression('COALESCE(sc.body,         s.body)         AS body'),
                 new Expression('COALESCE(sc.price_from,   s.price_from)   AS price_from'),
