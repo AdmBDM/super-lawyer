@@ -13,7 +13,9 @@ use yii\db\ActiveRecord;
  * @property string|null  $icon
  * @property string|null  $h1
  * @property string|null  $lead
- * @property string|null  $body
+ * @property array        $body          JSON — ['text'=>?, 'list'=>?, 'advantages'=>?]
+ * @property bool         $is_fiz
+ * @property bool         $is_jur
  * @property float|null   $price_from
  * @property string|null  $meta_title
  * @property string|null  $meta_desc
@@ -47,10 +49,11 @@ class Service extends ActiveRecord
             [['slug'], 'string', 'max' => 64],
             [['title'], 'string', 'max' => 128],
             [['icon'],  'string', 'max' => 64],
-            [['lead', 'body', 'meta_desc', 'meta_keywords'], 'string'],
+            [['lead', 'meta_desc', 'meta_keywords'], 'string'],
+            [['body'],  'safe'],                    // jsonb
             [['price_from'], 'number'],
             [['meta_title', 'h1'], 'string', 'max' => 255],
-            [['is_active'], 'boolean'],
+            [['is_active', 'is_fiz', 'is_jur'], 'boolean'],
             [['slug'], 'unique'],
         ];
     }

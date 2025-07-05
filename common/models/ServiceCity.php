@@ -12,7 +12,9 @@ use yii\db\ActiveRecord;
  * @property int          $service_id
  * @property string|null  $h1
  * @property string|null  $lead
- * @property string|null  $body
+ * @property array        $body          JSON — ['text'=>?, 'list'=>?, 'advantages'=>?]
+ * @property bool         $is_fiz
+ * @property bool         $is_jur
  * @property float|null   $price_from
  * @property string|null  $meta_title
  * @property string|null  $meta_desc
@@ -46,10 +48,11 @@ class ServiceCity extends ActiveRecord
         return [
             [['city_id', 'service_id'], 'required'],
             [['city_id', 'service_id'], 'integer'],
-            [['lead', 'body', 'meta_desc', 'meta_keywords'], 'string'],
+            [['lead', 'meta_desc', 'meta_keywords'], 'string'],
+            [['body'],  'safe'],                    // jsonb
             [['price_from'], 'number'],
             [['h1', 'meta_title'], 'string', 'max' => 255],
-            [['is_active'], 'boolean'],
+            [['is_active', 'is_fiz', 'is_jur'], 'boolean'],
             [['city_id', 'service_id'], 'unique', 'targetAttribute' => ['city_id', 'service_id']],
         ];
     }
