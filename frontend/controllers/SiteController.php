@@ -15,6 +15,7 @@ use frontend\models\SignupForm;
 use frontend\models\VerifyEmailForm;
 use yii\base\InvalidArgumentException;
 use yii\captcha\CaptchaAction;
+use yii\db\Expression;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
@@ -139,19 +140,34 @@ class SiteController extends Controller
 //            ->where(['is_active' => true])
 //            ->orderBy(['title' => SORT_ASC])
 //            ->all();
+        $cid = $currentCity->id;
+
         $servicesAR = Service::find()
             ->alias('s')
-//            ->innerJoin(
-//                ['sc' => ServiceCity::tableName()],
-//                'sc.service_id = s.id AND sc.city_id = :cid AND sc.is_active = true'
-//            )
-            ->rightJoin(
+            ->leftJoin(
                 ['sc' => ServiceCity::tableName()],
-                'sc.service_id = s.id AND sc.city_id = :cid AND coalesce(sc.is_active, true) = true'
+                'sc.service_id = s.id AND sc.city_id = :cid',
+                [':cid' => $cid]
             )
+            ->select([
+                'id'         => 's.id',
+                'slug'       => 's.slug',
+
+                // приоритет: sc.*  →  s.*
+                new Expression('COALESCE(sc.title,        s.title)        AS title'),
+                new Expression('COALESCE(sc.lead,         s.lead)         AS lead'),
+                new Expression('COALESCE(sc.body,         s.body)         AS body'),
+                new Expression('COALESCE(sc.price_from,   s.price_from)   AS price_from'),
+                new Expression('COALESCE(sc.meta_title,   s.meta_title)   AS meta_title'),
+                new Expression('COALESCE(sc.meta_desc,    s.meta_desc)    AS meta_desc'),
+                new Expression('COALESCE(sc.meta_keywords,s.meta_keywords)AS meta_keywords'),
+                new Expression('COALESCE(sc.is_fiz,       s.is_fiz)       AS is_fiz'),
+                new Expression('COALESCE(sc.is_jur,       s.is_jur)       AS is_jur'),
+            ])
             ->where(['s.is_active' => true])
-            ->params([':cid' => $currentCity->id])
-            ->orderBy(['s.title' => SORT_ASC])
+            ->andWhere('(sc.is_active IS NULL OR sc.is_active = true)')
+            ->orderBy(['title' => SORT_ASC])
+//            ->asArray()          // получаем массивы, а не AR‑объекты; удобно для списка
             ->all();
 
         /* 3.  Приводим к массиву ['slug' => [title, lead]] — если нужно,
