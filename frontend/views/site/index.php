@@ -7,7 +7,7 @@ use yii\helpers\Html;
 /** @var array $services   */
 /** @var array $cityOptions   */
 
-$this->title = 'Юрист онлайн — ' . Html::encode($currentCity);
+$this->title = 'Юрист онлайн — ' . Html::encode($currentCity->name);
 ?>
 
 <?= $this->render('partials/_hero', ['currentCity' => $currentCity]) ?>
