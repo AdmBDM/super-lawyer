@@ -135,9 +135,19 @@ class SiteController extends Controller
         $cityList    = Yii::$app->view->params['cityList'];   // для блока «другие города»
 
         /* 2.  Берём все активные услуги */
+//        $servicesAR = Service::find()
+//            ->where(['is_active' => true])
+//            ->orderBy(['title' => SORT_ASC])
+//            ->all();
         $servicesAR = Service::find()
-            ->where(['is_active' => true])
-            ->orderBy(['title' => SORT_ASC])
+            ->alias('s')
+            ->innerJoin(
+                ['sc' => ServiceCity::tableName()],
+                'sc.service_id = s.id AND sc.city_id = :cid AND sc.is_active = true'
+            )
+            ->where(['s.is_active' => true])
+            ->params([':cid' => $currentCity->id])
+            ->orderBy(['s.title' => SORT_ASC])
             ->all();
 
         /* 3.  Приводим к массиву ['slug' => [title, lead]] — если нужно,
