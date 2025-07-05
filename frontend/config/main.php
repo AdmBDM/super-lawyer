@@ -40,7 +40,13 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => true,
             'rules' => [
+                // Главная + стандартные
+                '' => 'site/index',
                 'site/set-city' => 'site/set-city',
+                'site/<action>' => 'site/<action>',
+
+                // Главный маршрут: /город/услуга
+                '<city:[a-z0-9\-]+>/<service:[a-z0-9\-]+>' => 'site/service-view',
             ],
         ],
     ],

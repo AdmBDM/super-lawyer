@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use common\models\Service;
+use common\models\ServiceCity;
 use Yii;
 use common\models\City;
 use common\models\LoginForm;
@@ -21,6 +22,7 @@ use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\web\Cookie;
 use yii\web\ErrorAction;
+use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
 /**
@@ -344,7 +346,6 @@ class SiteController extends Controller
      */
     public function actionSetCity(string $slug = 'msk'): Response
     {
-
         $city = City::findOne(['slug' => $slug, 'is_active' => true]);
         if ($city) {
             Yii::$app->response->cookies->add(new yii\web\Cookie([
@@ -356,37 +357,57 @@ class SiteController extends Controller
             ]));
         }
         return $this->redirect(Yii::$app->request->referrer ?: ['/']);
+    }
 
-//        // допустимые слуги
-//        $allowed = ['msk','spb','ekb','nsk','kzn','sch'];
-//        if (!in_array($slug, $allowed)) {
-//            $slug = 'msk';
-//        }
-//
-//        $cookies = Yii::$app->response->cookies;
-//
-//        // ❌ сначала удаляем ВСЕ варианты 'city'
-//        $cookies->remove('city'); // удалит вариант без домена
-//        // удаляем вариант с точкой перед доменом
-//        Yii::$app->response->cookies->add(new yii\web\Cookie([
-//            'name'   => 'city',
-//            'value'  => '',
-//            'path'   => '/',
-//            'domain' => '.' . Yii::$app->request->hostName,
-//            'expire' => time() - 3600,        // просрочить
-//        ]));
-//
-//        // ✅ теперь добавляем ОДНУ правильную cookie
-//        $cookies->add(new yii\web\Cookie([
-//            'name'   => 'city',
-//            'value'  => $slug,
-//            'path'   => '/',
-//            'domain' => '.' . Yii::$app->request->hostName, // с точкой
-//            'expire' => time() + 30*24*60*60,
-//            'httpOnly' => false,
-//        ]));
-//
-//        return $this->redirect(Yii::$app->request->referrer ?: ['/']);
+    /**
+     * @param $city
+     * @param $service
+     *
+     * @return string
+     * @throws NotFoundHttpException
+     */
+    public function actionServiceView($city, $service): string
+    {
+        // Город
+        $cityModel = City::find()
+            ->where(['slug' => $city, 'is_active' => true])
+            ->one();
+
+        if (!$cityModel) {
+            throw new NotFoundHttpException('Город не найден');
+        }
+
+        // Услуга
+        $serviceModel = Service::find()
+            ->where(['slug' => $service, 'is_active' => true])
+            ->one();
+
+        if (!$serviceModel) {
+            throw new NotFoundHttpException('Услуга не найдена');
+        }
+
+        // Привязка город-услуга (service_city)
+        $serviceCity = ServiceCity::find()
+            ->where(['city_id' => $cityModel->id, 'service_id' => $serviceModel->id])
+            ->andWhere(['is_active' => true])
+            ->with('blocks')
+            ->one();
+
+        // Если связки нет — показываем лендинг «пока нет»
+        if (!$serviceCity) {
+            return $this->render('service-empty', [
+                'city'    => $cityModel,
+                'service' => $serviceModel,
+            ]);
+        }
+
+        // Всё найдено — полноценный лендинг
+        return $this->render('service-view', [
+            'city'        => $cityModel,
+            'service'     => $serviceModel,
+            'serviceCity' => $serviceCity,
+            'blocks'      => $serviceCity->blocks,
+        ]);
     }
 
 }
