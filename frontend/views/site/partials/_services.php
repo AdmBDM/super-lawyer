@@ -3,7 +3,7 @@
 use common\models\City;
 use yii\helpers\Html;
 
-/** @var City $city */
+/** @var City $currentCity */
 /** @var array  $services */
 /** @var string $slug */
 
@@ -11,7 +11,7 @@ use yii\helpers\Html;
 <section id="services" class="services-section py-5">
 	<div class="container">
 		<h2 class="mb-4 text-center">
-			Наши юридические услуги в <?= Html::encode($city->dative) ?>
+			Наши юридические услуги в <?= Html::encode($currentCity->dative) ?>
 		</h2>
 
 		<div class="row gy-4">
