@@ -141,9 +141,13 @@ class SiteController extends Controller
 //            ->all();
         $servicesAR = Service::find()
             ->alias('s')
-            ->innerJoin(
+//            ->innerJoin(
+//                ['sc' => ServiceCity::tableName()],
+//                'sc.service_id = s.id AND sc.city_id = :cid AND sc.is_active = true'
+//            )
+            ->leftJoin(
                 ['sc' => ServiceCity::tableName()],
-                'sc.service_id = s.id AND sc.city_id = :cid AND sc.is_active = true'
+                'sc.service_id = s.id AND sc.city_id = :cid AND coalesce(sc.is_active, true) = true'
             )
             ->where(['s.is_active' => true])
             ->params([':cid' => $currentCity->id])
