@@ -10,7 +10,10 @@ class m250705_190412_alter_service_tables extends Migration
     private const T_SERVICE      = '{{%service}}';
     private const T_SERVICECITY  = '{{%service_city}}';
 
-    public function safeUp()
+    /**
+     * @return void
+     */
+    public function safeUp(): void
     {
         /* ---------- service ---------- */
         if (!$this->db->getTableSchema(self::T_SERVICE, true)->getColumn('is_fiz')) {
@@ -21,9 +24,9 @@ class m250705_190412_alter_service_tables extends Migration
         }
 
         // body → jsonb
+        $this->execute('ALTER TABLE {{%service}} ALTER COLUMN body DROP DEFAULT');
+
         $this->execute("
-            ALTER TABLE ".self::T_SERVICE."
-            ALTER COLUMN body DROP DEFAULT;
             ALTER TABLE ".self::T_SERVICE."
             ALTER COLUMN body TYPE jsonb
             USING CASE
@@ -32,9 +35,9 @@ class m250705_190412_alter_service_tables extends Migration
                           THEN body::jsonb
                      ELSE jsonb_build_object('text', body)::jsonb
                  END;
-            ALTER TABLE ".self::T_SERVICE."
-            ALTER COLUMN body SET DEFAULT '{}'::jsonb;
         ");
+
+        $this->execute("ALTER TABLE {{%service}} ALTER COLUMN body SET DEFAULT '{}'::jsonb");
 
         /* ---------- service_city ---------- */
         if (!$this->db->getTableSchema(self::T_SERVICECITY, true)->getColumn('is_fiz')) {
@@ -44,9 +47,10 @@ class m250705_190412_alter_service_tables extends Migration
             $this->addColumn(self::T_SERVICECITY, 'is_jur', $this->boolean()->defaultValue(true));
         }
 
+        // body → jsonb
+        $this->execute('ALTER TABLE {{%service_city}} ALTER COLUMN body DROP DEFAULT');
+
         $this->execute("
-            ALTER TABLE ".self::T_SERVICECITY."
-            ALTER COLUMN body DROP DEFAULT;
             ALTER TABLE ".self::T_SERVICECITY."
             ALTER COLUMN body TYPE jsonb
             USING CASE
@@ -54,12 +58,15 @@ class m250705_190412_alter_service_tables extends Migration
                      WHEN body ~ '^[\\s\\n]*\\{' THEN body::jsonb
                      ELSE jsonb_build_object('text', body)::jsonb
                  END;
-            ALTER TABLE ".self::T_SERVICECITY."
-            ALTER COLUMN body SET DEFAULT '{}'::jsonb;
         ");
+
+        $this->execute("ALTER TABLE {{%service_city}} ALTER COLUMN body SET DEFAULT '{}'::jsonb");
     }
 
-    public function safeDown()
+    /**
+     * @return false
+     */
+    public function safeDown(): false
     {
         echo "m250705_190412_alter_service_tables cannot be reverted.\n";
         return false;
