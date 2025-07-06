@@ -1,5 +1,3 @@
-import './services';
-
 document.addEventListener("DOMContentLoaded", function () {
 	const burger = document.querySelector('.burger');
 	const nav = document.querySelector('.nav-links');
@@ -19,4 +17,17 @@ document.addEventListener("DOMContentLoaded", function () {
 		});
 	}
 
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+	const btn = document.getElementById('toggleServicesBtn');
+	if (!btn) return;
+
+	btn.addEventListener('click', () => {
+		// ждём окончания bootstrap‑анимации collapse (350 мс по‑умолчанию)
+		setTimeout(() => {
+			const expanded = btn.getAttribute('aria-expanded') === 'true';
+			btn.textContent = expanded ? 'Скрыть услуги' : 'Показать все услуги';
+		}, 350);
+	});
 });
