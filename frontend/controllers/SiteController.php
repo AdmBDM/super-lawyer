@@ -389,7 +389,8 @@ class SiteController extends Controller
                 'expire' => time() + 30*24*60*60,
             ]));
         }
-        return $this->redirect(Yii::$app->request->referrer ?: ['/']);
+        // 💡 Независимо от того, где был пользователь — ведём его на главную
+        return $this->redirect(['/']);
     }
 
     /**
