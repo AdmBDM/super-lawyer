@@ -18,6 +18,14 @@
 	}
 }
 
+#services {
+	.collapse.show-more-target {
+		// карточки скрыты изначально, но место не оставляем
+		&.collapse:not(.show) { display: none; }
+	}
+}
+
+
 .icon-wrapper {
 	display: inline-flex;
 	align-items: center;
