@@ -19,6 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 
+// для открытия/закрытия services
 // document.addEventListener('DOMContentLoaded', () => {
 // 	const btn = document.getElementById('toggleServicesBtn');
 // 	if (!btn) return;

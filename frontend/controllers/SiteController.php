@@ -85,7 +85,7 @@ class SiteController extends Controller
                 ->orderBy(['id' => SORT_ASC])
                 ->one();
             // кладём корректную куку, чтобы больше не было «пусто»
-            Yii::$app->response->cookies->add(new yii\web\Cookie([
+            Yii::$app->response->cookies->add(new Cookie([
                 'name'   => 'city',
                 'value'  => $currentCity->slug,
                 'path'   => '/',
@@ -381,7 +381,7 @@ class SiteController extends Controller
     {
         $city = City::findOne(['slug' => $slug, 'is_active' => true]);
         if ($city) {
-            Yii::$app->response->cookies->add(new yii\web\Cookie([
+            Yii::$app->response->cookies->add(new Cookie([
                 'name'   => 'city',
                 'value'  => $slug,
                 'path'   => '/',
