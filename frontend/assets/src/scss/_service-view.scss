@@ -1,0 +1,31 @@
+.service-hero {
+	background: linear-gradient(120deg, #004080 0%, #0078d7 100%);
+	h1 { font-size: 2.2rem; @media (min-width: 768px){ font-size:3rem; } }
+}
+
+.service-body {
+	.price-label { border-left: 4px solid #198754; padding-left: .75rem; }
+	.service-list {
+		list-style: none;
+		padding-left: 0;
+		li {
+			position: relative;
+			padding-left: 1.5rem;
+			margin-bottom: .5rem;
+			&::before {
+				content: '✔';
+				color: #0d6efd;
+				position: absolute;
+				left: 0; top: 0;
+			}
+		}
+	}
+	.advantages-box {
+		background: #f8f9fa;
+		border-left: 4px solid #0d6efd;
+	}
+}
+
+.service-cta {
+	background: linear-gradient(120deg, #0078d7 0%, #004080 100%);
+}
