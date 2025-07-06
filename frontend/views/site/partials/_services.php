@@ -22,13 +22,25 @@ $cityDative = Html::encode($currentCity->dative ?: $currentCity->name);
 				<div class="col-12 col-md-6 col-lg-4">
 					<div class="card h-100 shadow-sm border-0">
 						<div class="card-body d-flex flex-column">
-                            <?php if (!empty($srv['icon'])): ?>
-								<div class="mb-3 text-primary fs-1">
-									<i class="<?= Html::encode($srv['icon']) ?>"></i>
-								</div>
-                            <?php endif; ?>
+							<div style="display: none">
+                                <?php if (!empty($srv['icon'])): ?>
+									<div class="mb-3 text-primary fs-1">
+										<i class="<?= Html::encode($srv['icon']) ?>"></i>
+									</div>
+                                <?php endif; ?>
 
-							<h5 class="card-title"><?= Html::encode($srv['title']) ?></h5>
+								<h5 class="card-title"><?= Html::encode($srv['title']) ?></h5>
+							</div>
+
+							<div class="d-flex align-items-center mb-3 gap-3">
+                                <?php if (!empty($srv['icon'])): ?>
+									<span class="icon-wrapper text-primary fs-3" aria-label="<?= Html::encode($srv['title']) ?>">
+										<i class="<?= Html::encode($srv['icon']) ?>" aria-hidden="true"></i>
+									</span>
+                                <?php endif; ?>
+								<h5 class="card-title mb-0"><?= Html::encode($srv['title']) ?></h5>
+							</div>
+
 
                             <?php if (!empty($srv['lead'])): ?>
 								<p class="card-text text-muted">
