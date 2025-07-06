@@ -140,14 +140,14 @@ class SiteController extends Controller
 //            ->where(['is_active' => true])
 //            ->orderBy(['title' => SORT_ASC])
 //            ->all();
-        $cid = $currentCity->id;
+//        $cid = $currentCity->id;
 
         $servicesAR = Service::find()
             ->alias('s')
             ->leftJoin(
                 ['sc' => ServiceCity::tableName()],
                 'sc.service_id = s.id AND sc.city_id = :cid',
-                [':cid' => $cid]
+                [':cid' => $currentCity->id]
             )
             ->select([
                 'id'         => 's.id',
@@ -168,17 +168,19 @@ class SiteController extends Controller
             ->andWhere('(sc.is_active IS NULL OR sc.is_active = true)')
             ->orderBy(['title' => SORT_ASC])
 //            ->asArray()          // получаем массивы, а не AR‑объекты; удобно для списка
-            ->all();
+//            ->all()
+        ;
 
         /* 3.  Приводим к массиву ['slug' => [title, lead]] — если нужно,
                либо прямо передаём AR‑объекты во view */
-        $services = ArrayHelper::map(
-            $servicesAR,
-            'slug',
-            function (Service $s) {
-                return [$s->title, $s->lead ?: ''];
-            }
-        );
+//        $services = ArrayHelper::map(
+//            $servicesAR,
+//            'slug',
+//            function (Service $s) {
+//                return [$s->title, $s->lead ?: ''];
+//            }
+//        );
+        $services = $servicesAR->asArray()->all();   // ← готовый ассоциативный список
 
         return $this->render('index', [
             'currentCity' => $currentCity,
