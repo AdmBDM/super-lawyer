@@ -153,6 +153,7 @@ class SiteController extends Controller
                 'id'         => 's.id',
                 'slug'       => 's.slug',
                 'title'      => 's.title',
+                'icon'       => 's.icon',
                 // приоритет: sc.*  →  s.*
                 new Expression('COALESCE(sc.h1,           s.h1)           AS h1'),
                 new Expression('COALESCE(sc.lead,         s.lead)         AS lead'),
