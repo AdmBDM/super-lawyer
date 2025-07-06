@@ -1,0 +1,19 @@
+#services {
+	.card {
+		border-radius: 1rem;
+		transition: all 0.2s ease-in-out;
+
+		&:hover {
+			transform: translateY(-2px);
+			box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+		}
+
+		.card-body {
+			padding: 1.5rem;
+
+			i {
+				font-size: 2rem;
+			}
+		}
+	}
+}
