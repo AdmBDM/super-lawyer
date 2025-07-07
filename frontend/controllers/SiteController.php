@@ -188,6 +188,7 @@ class SiteController extends Controller
             'citySlug'    => $currentCity->slug,
             'services'    => $services,
             'cityOptions' => ArrayHelper::map($cityList, 'slug', 'name'), // для блока grid
+            'cities' => $cityList,
         ]);
     }
 
