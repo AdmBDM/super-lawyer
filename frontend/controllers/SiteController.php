@@ -100,6 +100,10 @@ class SiteController extends Controller
             ->where(['in_location' => true, 'is_active' => true])
             ->orderBy(['name' => SORT_ASC])
             ->all();
+        Yii::$app->view->params['cityListAll'] = City::find()
+            ->where(['is_active' => true])
+            ->orderBy(['name' => SORT_ASC])
+            ->all();
 
         return parent::beforeAction($action);
     }
@@ -188,7 +192,7 @@ class SiteController extends Controller
             'citySlug'    => $currentCity->slug,
             'services'    => $services,
             'cityOptions' => ArrayHelper::map($cityList, 'slug', 'name'), // для блока grid
-            'cities' => $cityList,
+            'cities' => Yii::$app->view->params['cityListAll'],
         ]);
     }
 
