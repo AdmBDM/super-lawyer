@@ -45,6 +45,8 @@ return [
                 'site/set-city' => 'site/set-city',
                 'site/<action>' => 'site/<action>',
 
+                // Главный маршрут: /город
+                '<city:[a-z0-9\-]+>' => 'site/city-view',
                 // Главный маршрут: /город/услуга
                 '<city:[a-z0-9\-]+>/<service:[a-z0-9\-]+>' => 'site/service-view',
             ],

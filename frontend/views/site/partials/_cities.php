@@ -20,14 +20,6 @@ use common\models\City;
                 ?>
 				<div class="col-6 col-md-4 col-lg-3 <?= $wrapClass ?>">
 					<div class="city-card p-3 text-center shadow-sm rounded bg-light h-100">
-<!--						<div class="icon fs-2 text-primary mb-2">-->
-<!--							<i class="bi bi-geo-alt-fill"></i>-->
-<!--						</div>-->
-<!--						<h5 class="mb-2">--><?php //= Html::encode($city->name) ?><!--</h5>-->
-<!--						<a href="--><?php //= Url::to("/site/set-city?slug={$city->slug}") ?><!--"-->
-<!--						   class="btn btn-outline-primary btn-sm w-100">-->
-<!--							Выбрать-->
-<!--						</a>-->
 						<div class="card h-100 shadow-sm border-0">
 							<div class="card-body d-flex flex-column">
 
@@ -39,9 +31,9 @@ use common\models\City;
 								</div>
 
 								<div class="mt-auto">
-									<a href="<?= Url::to("/site/set-city?slug={$city->slug}") ?>"
-									   class="btn btn-outline-primary w-100">
-										Выбрать
+									<a href="<?= Url::to("/{$city->slug}") ?>"
+									   class="btn btn-outline-primary btn-sm w-100">
+										Перейти
 									</a>
 								</div>
 

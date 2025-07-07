@@ -449,4 +449,39 @@ class SiteController extends Controller
         ]);
     }
 
+    /**
+     * @param $city
+     *
+     * @return string
+     * @throws NotFoundHttpException
+     */
+    public function actionCityView($city): string
+    {
+        $cityModel = City::find()
+            ->where(['slug' => $city, 'is_active' => true])
+            ->one();
+
+        if (!$cityModel) {
+            throw new NotFoundHttpException('Город не найден');
+        }
+
+        // все активные услуги
+        $services = Service::find()
+            ->where(['is_active' => true])
+            ->orderBy(['title' => SORT_ASC])
+            ->all();
+
+        // связки для этого города (в одну выборку)
+        $links = ServiceCity::find()
+            ->select(['service_id'])
+            ->where(['city_id' => $cityModel->id, 'is_active' => true])
+            ->column();                                 // [ 3, 5, 7 … ]
+
+        return $this->render('city-view', [
+            'city'     => $cityModel,
+            'services' => $services,
+            'activeIds'=> $links,       // список ID доступных услуг
+        ]);
+    }
+
 }
