@@ -2,7 +2,14 @@ document.addEventListener("DOMContentLoaded", function () {
 	const burger = document.querySelector('.burger');
 	const nav = document.querySelector('.nav-links');
 	const citySelect = document.getElementById('citySelectNav');
-	const btn = document.getElementById('toggleServicesBtn');
+	const btnService = document.getElementById('toggleServicesBtn');
+	const btnCities = document.getElementById('toggleCitiesBtn');
+
+	let collapseTimeout = 350;
+	let txtClose = 'Скрыть ';
+	let txtOpen = 'Показать все ';
+	let txtService = 'услуги';
+	let txtCity = 'города';
 
 	if (burger && nav) {
 		burger.addEventListener('click', () => {
@@ -18,13 +25,22 @@ document.addEventListener("DOMContentLoaded", function () {
 		});
 	}
 
-	if (btn) {
-		btn.addEventListener('click', () => {
+	if (btnService) {
+		btnService.addEventListener('click', () => {
 			// ждём окончания bootstrap‑анимации collapse (350 мс по‑умолчанию)
 			setTimeout(() => {
-				const expanded = btn.getAttribute('aria-expanded') === 'true';
-				btn.textContent = expanded ? 'Скрыть услуги' : 'Показать все услуги';
-			}, 350);
+				const expanded = btnService.getAttribute('aria-expanded') === 'true';
+				btnService.textContent = expanded ? txtClose + txtService : txtOpen + txtService;
+			}, collapseTimeout);
+		});
+	}
+
+	if (btnCities) {
+		btnCities.addEventListener('click', () => {
+			setTimeout(() => {
+				const expanded = btnCities.getAttribute('aria-expanded') === 'true';
+				btn.textContent = expanded ? txtClose + txtCity : txtOpen + txtCity;
+			}, collapseTimeout);
 		});
 	}
 

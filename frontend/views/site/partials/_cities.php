@@ -1,23 +1,49 @@
 <?php
 use yii\helpers\Html;
+use yii\helpers\Url;
+use common\models\City;
 
-/** @var array $cityOptions */
-/** @var string $citySlug */
-
+/** @var City[] $cities */
 ?>
-<section id="cities" class="cities-grid py-5 bg-light">
+
+<section id="cities" class="py-5 bg-white border-top">
 	<div class="container">
-		<h2 class="mb-4 text-center">Юридическая помощь в других городах</h2>
-		<div class="row gy-3 justify-content-center text-center">
-            <?php foreach ($cityOptions as $slug => $name): ?>
-                <?php if ($slug === $citySlug) continue; // исключаем текущий город ?>
-				<div class="col-6 col-sm-4 col-md-3">
-					<a href="/<?= Html::encode($slug) ?>"
-					   class="btn btn-outline-secondary w-100">
-                        <?= Html::encode($name) ?>
-					</a>
+		<h2 class="mb-4 text-center">Города, где мы работаем</h2>
+
+		<div class="row g-4 justify-content-center">
+
+            <?php foreach ($cities as $i => $city): ?>
+                <?php
+                // первые 8 показываем сразу; остальные в collapse
+                $inCollapse = $i >= 8;
+                $wrapClass  = $inCollapse ? 'collapse multi-collapse show-more-city' : '';
+                ?>
+				<div class="col-6 col-md-4 col-lg-3 <?= $wrapClass ?>">
+					<div class="city-card p-3 text-center shadow-sm rounded bg-light h-100">
+						<div class="icon fs-2 text-primary mb-2">
+							<i class="bi bi-geo-alt-fill"></i>
+						</div>
+						<h5 class="mb-2"><?= Html::encode($city->name) ?></h5>
+						<a href="<?= Url::to("/site/set-city?slug={$city->slug}") ?>"
+						   class="btn btn-outline-primary btn-sm w-100">
+							Выбрать
+						</a>
+					</div>
 				</div>
             <?php endforeach; ?>
+
 		</div>
+
+        <?php if (count($cities) > 8): ?>
+			<div class="text-center mt-4">
+				<button class="btn btn-outline-secondary"
+						data-bs-toggle="collapse"
+						data-bs-target=".show-more-city"
+						aria-expanded="false"
+						id="toggleCitiesBtn">
+					Показать все города
+				</button>
+			</div>
+        <?php endif; ?>
 	</div>
 </section>
