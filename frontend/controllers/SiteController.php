@@ -427,7 +427,7 @@ class SiteController extends Controller
 
         $this->view->params['breadcrumbs'] = [
             ['label' => 'Главная', 'url' => ['/']],
-            ['label' => $city->name, 'url' => ["/{$city->slug}"]],
+            ['label' => $cityModel->name, 'url' => ["/{$cityModel->slug}"]],
             ['label' => $service->title],
         ];
 
