@@ -91,10 +91,7 @@ $this->registerMetaTag(['name' => 'robots', 'content' => 'index,follow']);
 <?php endif; ?>
 
 <!-- CTA -->
-<section id="consult" class="service-cta py-5 text-center text-white">
-	<div class="container">
-		<h2 class="mb-3">Оставьте заявку на консультацию</h2>
-		<p class="mb-4">Наш юрист свяжется с вами в течение 15 минут</p>
-		<a href="/site/contact" class="btn btn-warning btn-lg text-dark fw-semibold">Связаться</a>
-	</div>
-</section>
+<?= $this->render('partials/_cta', [
+    'city' => $city,
+    'context' => 'service',
+]) ?>

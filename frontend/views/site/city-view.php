@@ -55,3 +55,9 @@ $this->title = "Юридические услуги в {$city->name}";
         </div>
     </div>
 </section>
+
+<!-- CTA -->
+<?= $this->render('partials/_cta', [
+    'city' => $city,
+    'context' => 'city',
+]) ?>

@@ -17,3 +17,19 @@
 		line-height: 1;
 	}
 }
+
+section.cta-block {
+	border-top: 1px solid #dee2e6;
+	background: #f8f9fa;
+	text-align: center;
+
+	h3 {
+		font-weight: 600;
+	}
+
+	p {
+		font-size: 1.1rem;
+		color: #555;
+	}
+}
+
