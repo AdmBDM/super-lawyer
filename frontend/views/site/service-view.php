@@ -19,7 +19,11 @@ $price   = $serviceCity->price_from ?? $service->price_from ?? null;
 $body    = $serviceCity->body       ?: $service->body       ?: [];
 
 $this->title = $title;
-$this->registerMetaTag(['name'=>'description','content'=>$serviceCity->meta_desc ?? $service->meta_desc ?? '']);
+$metaDesc = $serviceCity->meta_desc ??
+	$service->meta_desc ??
+    "Юридическая помощь по {$service->title} в {$city->name}. Онлайн‑консультации, представительство, подготовка документов.";
+$this->registerMetaTag(['name' => 'description','content' =>  $metaDesc]);
+$this->registerMetaTag(['name' => 'robots', 'content' => 'index,follow']);
 ?>
 
 <!-- HERO -->

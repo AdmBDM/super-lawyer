@@ -425,6 +425,12 @@ class SiteController extends Controller
             throw new NotFoundHttpException('Услуга не найдена');
         }
 
+        $this->view->params['breadcrumbs'] = [
+            ['label' => 'Главная', 'url' => ['/']],
+            ['label' => $city->name, 'url' => ["/{$city->slug}"]],
+            ['label' => $service->title],
+        ];
+
         // Привязка город-услуга (service_city)
         $serviceCity = ServiceCity::find()
             ->where(['city_id' => $cityModel->id, 'service_id' => $serviceModel->id])
@@ -464,6 +470,11 @@ class SiteController extends Controller
         if (!$cityModel) {
             throw new NotFoundHttpException('Город не найден');
         }
+
+        $this->view->params['breadcrumbs'] = [
+            ['label' => 'Главная', 'url' => ['/']],
+            ['label' => $cityModel->name],
+        ];
 
         // все активные услуги
         $services = Service::find()

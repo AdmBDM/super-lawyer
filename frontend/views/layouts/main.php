@@ -83,6 +83,39 @@ $this->title = Yii::$app->params['name'];
     ?>
 </header>
 
+<!-- ===== Хлебные крошки ===== -->
+<?php if (!empty($this->params['breadcrumbs'])): ?>
+	<div class="container mt-3">
+
+        <?= \yii\widgets\Breadcrumbs::widget([
+            'links'    => $this->params['breadcrumbs'],
+            'options'  => ['class' => 'breadcrumb small'],
+        ]) ?>
+
+        <?php
+        /* JSON‑LD для поисковиков */
+        $items = [];
+        foreach ($this->params['breadcrumbs'] as $pos => $crumb) {
+            $items[] = [
+                '@type'    => 'ListItem',
+                'position' => $pos + 1,
+                'name'     => $crumb['label'],
+                'item'     => Url::to($crumb['url'] ?? Yii::$app->request->url, true),
+            ];
+        }
+        $json = [
+            '@context'        => 'https://schema.org',
+            '@type'           => 'BreadcrumbList',
+            'itemListElement' => $items,
+        ];
+        $this->registerJs(
+            "window.__breadcrumbLD = " . json_encode($json, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES),
+            \yii\web\View::POS_BEGIN
+        );
+        ?>
+	</div>
+<?php endif; ?>
+
 <!-- ===== Main content ===== -->
 <main class="mt-5 pt-4">
     <?= $content ?>

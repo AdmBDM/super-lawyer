@@ -8,6 +8,7 @@ use yii\helpers\Html;
 /** @var Service $service */
 
 $this->title = "Услуга недоступна — {$service->title} в {$city->name}";
+$this->registerMetaTag(['name' => 'robots', 'content' => 'noindex,nofollow']);
 ?>
 
 <section class="py-5 text-center bg-light">
