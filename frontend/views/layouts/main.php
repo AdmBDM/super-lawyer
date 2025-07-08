@@ -91,7 +91,7 @@ $this->title = Yii::$app->params['name'];
 
 	<!-- ===== Хлебные крошки ===== -->
     <?php if (!empty($this->params['breadcrumbs'])): ?>
-		<div class="container mt-3" style="display: none;">
+		<div class="container mt-3">
 
             <?= Breadcrumbs::widget([
                 'links'    => $this->params['breadcrumbs'],
