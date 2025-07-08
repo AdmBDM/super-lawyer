@@ -9,6 +9,7 @@ use yii\bootstrap5\Html;
 use yii\bootstrap5\Nav;
 use yii\bootstrap5\NavBar;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Url;
 
 /** @var common\models\City        $currentCity  (из beforeAction) */
 /** @var common\models\City[]|null $cityList     (из beforeAction) */
