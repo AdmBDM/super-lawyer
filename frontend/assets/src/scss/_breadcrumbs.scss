@@ -1,0 +1,12 @@
+.breadcrumb {
+	font-size: 0.9rem;
+	background: none;
+	padding: 0;
+	margin: 0;
+
+	.breadcrumb-item + .breadcrumb-item::before {
+		content: '›';
+		padding: 0 0.5rem;
+		color: #6c757d;
+	}
+}
