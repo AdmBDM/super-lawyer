@@ -1,6 +1,7 @@
 <?php
 namespace common\models;
 
+use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
@@ -55,4 +56,17 @@ class City extends ActiveRecord
     {
         return $this->hasMany(ServiceCity::class, ['city_id' => 'id']);
     }
+
+    /**
+     * @return string|null
+     */
+    public function getCoatUrl(): ?string
+    {
+        $path = Yii::getAlias("@webroot/img/cities/{$this->slug}.png");
+        if (is_file($path)) {
+            return Yii::getAlias("@web/img/cities/{$this->slug}.png");
+        }
+        return null; // герба нет
+    }
+
 }

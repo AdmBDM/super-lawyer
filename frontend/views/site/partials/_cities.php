@@ -22,11 +22,17 @@ use common\models\City;
 					<div class="city-card p-3 text-center shadow-sm rounded bg-light h-100">
 						<div class="card h-100 shadow-sm border-0">
 							<div class="card-body d-flex flex-column">
+                                <?php $coat = $city->coatUrl; // null или URL png ?>
 
 								<div class="d-flex align-items-center gap-3 mb-3">
-									<span class="icon-wrapper text-primary fs-3" aria-hidden="true">
-										<i class="bi bi-geo-alt-fill"></i>
-									</span>
+                                    <?php if ($coat): ?>
+										<img src="<?= Html::encode($coat) ?>" alt="<?= Html::encode($city->name) ?>"
+											 class="city-coat">
+                                    <?php else: ?>
+										<span class="icon-wrapper text-primary fs-3">
+											<i class="bi bi-geo-alt-fill"></i>
+										</span>
+                                    <?php endif; ?>
 									<h5 class="card-title mb-0"><?= Html::encode($city->name) ?></h5>
 								</div>
 
