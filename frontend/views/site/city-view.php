@@ -12,7 +12,18 @@ $this->title = "Юридические услуги в {$city->name}";
 
 <section class="py-5">
     <div class="container">
-        <h1 class="mb-4">Услуги в <?= Html::encode($city->dative ?: $city->name) ?></h1>
+<!--        <h1 class="mb-4">Услуги в --><?php //= Html::encode($city->dative ?: $city->name) ?><!--</h1>-->
+		<div class="d-flex align-items-center gap-3 mb-4">
+            <?php if ($city->coatUrl): ?>
+				<img src="<?= Html::encode($city->coatUrl) ?>"
+					 alt="<?= Html::encode($city->name) ?>"
+					 class="city-coat-lg">
+            <?php endif; ?>
+
+			<h1 class="mb-0">
+				Услуги в <?= Html::encode($city->dative ?: $city->name) ?>
+			</h1>
+		</div>
 
         <div class="row g-4">
             <?php foreach ($services as $srv): ?>

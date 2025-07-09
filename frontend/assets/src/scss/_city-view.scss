@@ -2,3 +2,10 @@
 	opacity: .55;
 	.btn { cursor: not-allowed; }
 }
+
+.city-coat-lg {
+	width: 48px;          // можно 64px, если хочется крупнее
+	height: 48px;
+	object-fit: contain;
+	flex: 0 0 auto;
+}
