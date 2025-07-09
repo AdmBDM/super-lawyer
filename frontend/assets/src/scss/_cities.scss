@@ -20,3 +20,8 @@
 	object-fit: contain;
 	flex: 0 0 auto;
 }
+
+@media (max-width: 575.98px) {
+	#cities .city-card .icon-wrapper { width: 2rem; height: 2rem; }
+}
+

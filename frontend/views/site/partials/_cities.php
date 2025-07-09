@@ -18,7 +18,7 @@ use common\models\City;
                 $inCollapse = $i >= 8;
                 $wrapClass  = $inCollapse ? 'collapse multi-collapse show-more-city' : '';
                 ?>
-				<div class="col-6 col-md-4 col-lg-3 <?= $wrapClass ?>">
+				<div class="col-12 col-sm-6 col-md-4 col-lg-3 <?= $wrapClass ?>">
 					<div class="city-card p-3 text-center shadow-sm rounded bg-light h-100">
 						<div class="card h-100 shadow-sm border-0">
 							<div class="card-body d-flex flex-column">
