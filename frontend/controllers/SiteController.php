@@ -408,6 +408,8 @@ class SiteController extends Controller
      */
     public function actionServiceView($city, $service): string
     {
+        $limitFAQ = Yii::$app->params['limitFAQ'];
+
         // Город
         $cityModel = City::find()
             ->where(['slug' => $city, 'is_active' => true])
@@ -433,20 +435,20 @@ class SiteController extends Controller
                 'city_id'    => $cityModel->id,
                 'is_active'  => true,
             ])
-            ->limit(3)
+            ->limit($limitFAQ)
             ->all();
 
         $faqCount = count($faqLocal);
 
         $faqGlobal = [];
-        if ($faqCount < 3) {
+        if ($faqCount < $limitFAQ) {
             $faqGlobal = Faq::find()
                 ->where([
                     'service_id' => $serviceModel->id,
                     'city_id' => null,
                     'is_active' => true,
                 ])
-                ->limit(3)
+                ->limit($limitFAQ)
                 ->all();
         }
 

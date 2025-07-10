@@ -26,6 +26,12 @@
 	}
 }
 
+.accordion-body p:first-child {
+	margin-bottom: 0.25rem;
+	font-weight: 600;
+	color: #333;
+}
+
 .service-cta {
 	background: linear-gradient(120deg, #0078d7 0%, #004080 100%);
 }

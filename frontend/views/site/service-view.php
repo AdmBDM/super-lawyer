@@ -50,13 +50,6 @@ $this->registerMetaTag(['name' => 'robots', 'content' => 'index,follow']);
 <section class="service-body py-5">
 	<div class="container">
 
-		<!-- ЦЕНА -->
-        <?php if ($price): ?>
-			<p class="price-label text-success fw-semibold fs-4 mb-4">
-				Стоимость услуги: от <?= Yii::$app->formatter->asCurrency($price, 'RUB') ?>
-			</p>
-        <?php endif; ?>
-
 		<!-- ОПИСАНИЕ -->
         <?php if (!empty($body['text'])): ?>
 			<div class="mb-4"><?= Markdown::process($body['text'], 'gfm') ?></div>
@@ -80,6 +73,17 @@ $this->registerMetaTag(['name' => 'robots', 'content' => 'index,follow']);
 			</div>
         <?php endif; ?>
 
+		<!-- ЦЕНА -->
+        <?php if ($price): ?>
+			<p class="price-label text-success fw-semibold fs-4 mb-4">
+				Стоимость услуги: от <?= Yii::$app->formatter->asCurrency($price, 'RUB') ?>
+			</p>
+        <?php else: ?>
+			<p class="price-label text-success fw-semibold fs-4 mb-4">
+				Стоимость услуги: по договорённости. ?>
+			</p>
+        <?php endif; ?>
+
 	</div>
 </section>
 
@@ -101,6 +105,31 @@ $this->registerMetaTag(['name' => 'robots', 'content' => 'index,follow']);
 <?= $this->render('partials/_faq', [
     'faq' => $faq,
 ]) ?>
+
+<!-- Block for SEO -->
+<?php if (!empty($faq)): ?>
+    <?php
+    $faqJson = [
+        '@context' => 'https://schema.org',
+        '@type' => 'FAQPage',
+        'mainEntity' => [],
+    ];
+
+    foreach ($faq as $item) {
+        $faqJson['mainEntity'][] = [
+            '@type' => 'Question',
+            'name' => strip_tags($item->question),
+            'acceptedAnswer' => [
+                '@type' => 'Answer',
+                'text' => strip_tags(nl2br($item->answer)),
+            ]
+        ];
+    }
+    ?>
+	<script type="application/ld+json">
+<?= json_encode($faqJson, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) ?>
+</script>
+<?php endif; ?>
 
 <!-- CTA -->
 <?= $this->render('partials/_cta', [
