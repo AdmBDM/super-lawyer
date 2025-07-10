@@ -38,7 +38,7 @@ $this->registerMetaTag(['name' => 'robots', 'content' => 'index,follow']);
 	<div class="container text-center">
 		<h1 class="display-5 fw-bold mb-3"><?= Html::encode($h1) ?></h1>
         <?php if ($lead): ?>
-			<p class="lead"><?= Html::encode($lead) ?></p>
+			<p class="lead lh-base"><?= Html::encode($lead) ?></p>
         <?php endif; ?>
 		<a href="#consult" class="btn btn-warning btn-lg text-dark fw-semibold mt-3">
 			Получить консультацию
