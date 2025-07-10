@@ -34,7 +34,7 @@ class m250710_175133_create_faq_table extends Migration
                 CREATE TRIGGER trg_faq_updated
                 BEFORE UPDATE ON {{%faq}}
                 FOR EACH ROW
-                EXECUTE PROCEDURE update_updated_at_column();
+                EXECUTE PROCEDURE set_updated_at();
             ");
         }
     }
