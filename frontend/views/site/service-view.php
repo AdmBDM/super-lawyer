@@ -1,13 +1,20 @@
 <?php
-/** @var yii\web\View              $this */
-/** @var \common\models\City       $city */
-/** @var \common\models\Service    $service */
-/** @var \common\models\ServiceCity $serviceCity */
-/** @var \common\models\PageBlock[] $blocks */
 
+use common\models\City;
+use common\models\Faq;
+use common\models\PageBlock;
+use common\models\Service;
+use common\models\ServiceCity;
 use yii\helpers\Html;
 use yii\helpers\Markdown;
 use yii\helpers\Url;
+
+/** @var yii\web\View	$this */
+/** @var City       	$city */
+/** @var Service    	$service */
+/** @var ServiceCity 	$serviceCity */
+/** @var PageBlock[] 	$blocks */
+/** @var Faq 			$faq */
 
 $cityDative   = Html::encode($city->dative   ?: $city->name);
 $cityGenitive = Html::encode($city->genitive ?: $city->name);
@@ -89,6 +96,11 @@ $this->registerMetaTag(['name' => 'robots', 'content' => 'index,follow']);
 		</div>
 	</section>
 <?php endif; ?>
+
+<!-- FAQ -->
+<?= $this->render('partials/_faq', [
+    'faq' => $faq,
+]) ?>
 
 <!-- CTA -->
 <?= $this->render('partials/_cta', [

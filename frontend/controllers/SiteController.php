@@ -2,11 +2,12 @@
 
 namespace frontend\controllers;
 
-use common\models\Service;
-use common\models\ServiceCity;
 use Yii;
 use common\models\City;
+use common\models\Faq;
 use common\models\LoginForm;
+use common\models\Service;
+use common\models\ServiceCity;
 use frontend\models\ContactForm;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResendVerificationEmailForm;
@@ -425,6 +426,32 @@ class SiteController extends Controller
             throw new NotFoundHttpException('Услуга не найдена');
         }
 
+        // FAQ
+        $faqLocal = Faq::find()
+            ->where([
+                'service_id' => $service->id,
+                'city_id'    => $city->id,
+                'is_active'  => true,
+            ])
+            ->limit(3)
+            ->all();
+
+        $faqCount = count($faqLocal);
+
+        $faqGlobal = [];
+        if ($faqCount < 3) {
+            $faqGlobal = Faq::find()
+                ->where([
+                    'service_id' => $service->id,
+                    'city_id' => null,
+                    'is_active' => true,
+                ])
+                ->limit(3)
+                ->all();
+        }
+
+        $faq = array_merge($faqLocal, $faqGlobal);
+
         $this->view->params['breadcrumbs'] = [
             ['label' => 'Главная', 'url' => ['/']],
             ['label' => $cityModel->name, 'url' => ["/{$cityModel->slug}"]],
@@ -452,6 +479,7 @@ class SiteController extends Controller
             'service'     => $serviceModel,
             'serviceCity' => $serviceCity,
             'blocks'      => $serviceCity->blocks,
+            'faq'         => $faq,
         ]);
     }
 
