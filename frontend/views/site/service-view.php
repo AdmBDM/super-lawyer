@@ -80,7 +80,7 @@ $this->registerMetaTag(['name' => 'robots', 'content' => 'index,follow']);
 			</p>
         <?php else: ?>
 			<p class="price-label text-success fw-semibold fs-4 mb-4">
-				Стоимость услуги: по договорённости. ?>
+				Стоимость услуги: по договорённости.
 			</p>
         <?php endif; ?>
 
