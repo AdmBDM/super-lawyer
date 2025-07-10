@@ -31,20 +31,11 @@ class m250710_175133_create_faq_table extends Migration
             // Триггер автообновления updated_at
             $this->execute(
                 "
-                CREATE OR REPLACE FUNCTION update_updated_at_column()
-                RETURNS TRIGGER AS $$
-                BEGIN
-                    NEW.updated_at = NOW();
-                    RETURN NEW;
-                END;
-                $$ language 'plpgsql';
-
                 CREATE TRIGGER trg_faq_updated
                 BEFORE UPDATE ON {{%faq}}
                 FOR EACH ROW
                 EXECUTE PROCEDURE update_updated_at_column();
-            "
-            );
+            ");
         }
     }
 
