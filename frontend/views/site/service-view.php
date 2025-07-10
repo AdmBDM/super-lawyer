@@ -34,7 +34,7 @@ $this->registerMetaTag(['name' => 'robots', 'content' => 'index,follow']);
 ?>
 
 <!-- HERO -->
-<section class="service-hero py-5 text-white">
+<section class="service-hero py-3 text-white">
 	<div class="container text-center">
 		<h1 class="display-5 fw-bold mb-3"><?= Html::encode($h1) ?></h1>
         <?php if ($lead): ?>
