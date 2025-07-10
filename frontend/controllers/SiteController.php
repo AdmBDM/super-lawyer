@@ -429,8 +429,8 @@ class SiteController extends Controller
         // FAQ
         $faqLocal = Faq::find()
             ->where([
-                'service_id' => $service->id,
-                'city_id'    => $city->id,
+                'service_id' => $serviceModel->id,
+                'city_id'    => $cityModel->id,
                 'is_active'  => true,
             ])
             ->limit(3)
@@ -442,7 +442,7 @@ class SiteController extends Controller
         if ($faqCount < 3) {
             $faqGlobal = Faq::find()
                 ->where([
-                    'service_id' => $service->id,
+                    'service_id' => $serviceModel->id,
                     'city_id' => null,
                     'is_active' => true,
                 ])
