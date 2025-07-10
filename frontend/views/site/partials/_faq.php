@@ -19,14 +19,13 @@ use yii\helpers\Html;
 									data-bs-target="#collapse<?= $i ?>"
 									aria-expanded="<?= $i === 0 ? 'true' : 'false' ?>"
 									aria-controls="collapse<?= $i ?>">
-								<strong>Вопрос:</strong> <?= Html::encode($item->question) ?>
+								<strong>Вопрос:</strong>&nbsp;&nbsp;&nbsp;<?= Html::encode($item->question) ?>
 							</button>
 						</h2>
 						<div id="collapse<?= $i ?>" class="accordion-collapse collapse <?= $i === 0 ? 'show' : '' ?>"
 							 aria-labelledby="heading<?= $i ?>" data-bs-parent="#faqAccordion">
 							<div class="accordion-body">
-								<p><strong>Ответ:</strong></p>
-								<p><?= nl2br(Html::encode($item->answer)) ?></p>
+								<p><strong>Ответ:</strong>&nbsp;&nbsp;<?= nl2br(Html::encode($item->answer)) ?></p>
 							</div>
 						</div>
 					</div>

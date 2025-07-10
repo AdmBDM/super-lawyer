@@ -1,10 +1,11 @@
 .service-hero {
 	background: linear-gradient(120deg, #004080 0%, #0078d7 100%);
 	h1 { font-size: 2.2rem; @media (min-width: 768px){ font-size:3rem; } }
+	.lead {line-height: 1.5 }
 }
 
 .service-body {
-	.price-label { border-left: 4px solid #198754; padding-left: .75rem; }
+	.price-label { margin-top: 15px; border-left: 4px solid #198754; padding-left: .75rem; }
 	.service-list {
 		list-style: none;
 		padding-left: 0;
