@@ -43,16 +43,16 @@ $this->title = Yii::$app->params['name'];
 
     <?php
 //    $ogTitle       = $this->title ?? Yii::$app->params['name'];
-    $ogTitle       = $this->title;
-    $ogDescription = Yii::$app->view->params['meta_description'] ?? Yii::$app->params['description'] ?? '';
-    $ogImage       = Yii::$app->view->params['meta_image'] ?? Url::to('@web/images/og-default.jpg', true);
-    $ogUrl         = Url::to(Yii::$app->request->url, true);
-    ?>
-	<meta property="og:type"        content="website">
-	<meta property="og:title"       content="<?= Html::encode($ogTitle) ?>">
-	<meta property="og:description" content="<?= Html::encode($ogDescription) ?>">
-	<meta property="og:url"         content="<?= Html::encode($ogUrl) ?>">
-	<meta property="og:image"       content="<?= Html::encode($ogImage) ?>">
+//    $ogTitle       = $this->title;
+//    $ogDescription = Yii::$app->view->params['meta_description'] ?? Yii::$app->params['description'] ?? '';
+//    $ogImage       = Yii::$app->view->params['meta_image'] ?? Url::to('@web/images/og-default.jpg', true);
+//    $ogUrl         = Url::to(Yii::$app->request->url, true);
+//    ?>
+<!--	<meta property="og:type"        content="website">-->
+<!--	<meta property="og:title"       content="--><?php //= Html::encode($ogTitle) ?><!--">-->
+<!--	<meta property="og:description" content="--><?php //= Html::encode($ogDescription) ?><!--">-->
+<!--	<meta property="og:url"         content="--><?php //= Html::encode($ogUrl) ?><!--">-->
+<!--	<meta property="og:image"       content="--><?php //= Html::encode($ogImage) ?><!--">-->
 
 </head>
 <body>
