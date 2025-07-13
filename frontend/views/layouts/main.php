@@ -28,7 +28,7 @@ if (!$currentCity) {
 }
 $citySlug = $currentCity?->slug ?? 'msk';
 
-$this->title = Yii::$app->params['name'];
+//$this->title = Yii::$app->params['name'];
 
 $params = Yii::$app->params;
 $viewParams = Yii::$app->view->params;
