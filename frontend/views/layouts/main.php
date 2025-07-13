@@ -47,15 +47,32 @@ $this->title = Yii::$app->params['name'];
 <!-- ===== Header & Navbar ===== -->
 <header>
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-		<div class="container-fluid">
+		<div class="container-fluid d-flex justify-content-between align-items-center">
 
-			<!-- Логотип -->
-			<a class="navbar-brand" href="<?= Yii::$app->homeUrl ?>">
-                <?= Html::encode(Yii::$app->params['name']) ?>
-			</a>
+			<!-- ЛЕВАЯ ЧАСТЬ: Логотип + селектор города -->
+			<div class="d-flex align-items-center">
+				<a class="navbar-brand me-3" href="<?= Yii::$app->homeUrl ?>">
+                    <?= Html::encode(Yii::$app->params['name']) ?>
+				</a>
 
-			<!-- 📞 Телефон + 🍔 бургер (только на мобильных) -->
-			<div class="d-lg-none d-flex align-items-center ms-auto">
+				<!-- Селектор города -->
+                <?= Html::beginTag('div', ['class' => 'navbar-city-selector d-none d-lg-block']) ?>
+				<div class="input-group input-group-sm">
+          <span class="input-group-text bg-light text-dark">
+            <i class="bi bi-geo-alt-fill"></i>
+          </span>
+                    <?= Html::dropDownList(
+                        'city',
+                        $citySlug,
+                        ArrayHelper::map($cityList, 'slug', 'name'),
+                        ['class' => 'form-select', 'id' => 'citySelectNav']
+                    ) ?>
+				</div>
+                <?= Html::endTag('div') ?>
+			</div>
+
+			<!-- ПРАВАЯ ЧАСТЬ: иконка телефона + бургер -->
+			<div class="d-lg-none d-flex align-items-center">
 				<a href="tel:+78005553535" class="text-warning fs-4 me-3" aria-label="Позвонить">
 					<i class="bi bi-telephone-fill"></i>
 				</a>
@@ -69,11 +86,10 @@ $this->title = Yii::$app->params['name'];
 				</button>
 			</div>
 
-			<!-- Меню и селектор -->
+			<!-- ПРАВАЯ ЧАСТЬ на десктопе -->
 			<div class="collapse navbar-collapse" id="mainNav">
-
-				<!-- Селектор города -->
-                <?= Html::beginTag('div', ['class' => 'navbar-city-selector mx-3']) ?>
+				<!-- Селектор города (дублируется на мобилке) -->
+                <?= Html::beginTag('div', ['class' => 'navbar-city-selector d-lg-none my-2']) ?>
 				<div class="input-group input-group-sm">
           <span class="input-group-text bg-light text-dark">
             <i class="bi bi-geo-alt-fill"></i>
@@ -82,12 +98,12 @@ $this->title = Yii::$app->params['name'];
                         'city',
                         $citySlug,
                         ArrayHelper::map($cityList, 'slug', 'name'),
-                        ['class' => 'form-select', 'id' => 'citySelectNav']
+                        ['class' => 'form-select w-auto', 'id' => 'citySelectNav']
                     ) ?>
 				</div>
                 <?= Html::endTag('div') ?>
 
-				<!-- Пункты меню -->
+				<!-- Меню -->
                 <?= Nav::widget([
                     'options' => ['class' => 'navbar-nav ms-auto align-items-lg-center'],
                     'items'   => [
@@ -102,9 +118,8 @@ $this->title = Yii::$app->params['name'];
                         ],
                     ],
                 ]) ?>
-
-			</div><!-- /#mainNav -->
-		</div><!-- /.container-fluid -->
+			</div>
+		</div>
 	</nav>
 </header>
 
