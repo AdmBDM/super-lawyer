@@ -74,7 +74,8 @@ $this->registerMetaTag(['name' => 'robots', 'content' => 'index,follow']);
         <?php endif; ?>
 
         <?php if (!empty($body['advantages'])): ?>
-			<div class="service-advantages mt-4">
+			<div class="mt-5 p-4 advantages-box">
+<!--			<div class="service-advantages mt-4">-->
 				<h2 class="h5 mb-3">Преимущества работы с нами</h2>
 				<ul class="list-unstyled ps-3">
                     <?php foreach (preg_split('/\r\n|\r|\n/', $body['advantages']) as $adv): ?>
