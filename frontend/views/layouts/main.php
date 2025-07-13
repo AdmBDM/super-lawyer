@@ -82,9 +82,6 @@ $this->title = Yii::$app->params['name'];
         ],
     ]);
 
-    NavBar::end();
-
-
     /* — иконка телефона + бургер для мобильных — */
     echo Html::beginTag('div', ['class' => 'd-lg-none d-flex align-items-center ms-auto']);
 
@@ -95,6 +92,7 @@ $this->title = Yii::$app->params['name'];
     );
     echo Html::endTag('div');
 
+    NavBar::end();
     ?>
 </header>
 
