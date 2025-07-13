@@ -3,6 +3,7 @@ return [
     'language' => 'ru-RU',
     'sourceLanguage' => 'ru-RU',
     'name' => 'Супер-Юрист',
+    'description' => 'Онлайн‑юристы. Помощь физическим и юридическим лицам по всей России.',
     'adminEmail' => 'admin@example.com',
     'supportEmail' => 'support@example.com',
     'senderEmail' => 'noreply@example.com',
