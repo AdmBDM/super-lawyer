@@ -46,67 +46,66 @@ $this->title = Yii::$app->params['name'];
 
 <!-- ===== Header & Navbar ===== -->
 <header>
-    <?php
-    NavBar::begin([
-        'brandLabel' => Yii::$app->params['name'],
-        'brandUrl'   => Yii::$app->homeUrl,
-        'options'    => ['class' => 'navbar navbar-expand-lg navbar-dark bg-dark fixed-top'],
-    ]);
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+		<div class="container-fluid">
 
-    /* — селектор города — */
-    echo Html::beginTag('div', ['class' => 'navbar-city-selector mx-3']);
-    echo '<div class="input-group input-group-sm">';
-    echo '<span class="input-group-text bg-light text-dark"><i class="bi bi-geo-alt-fill"></i></span>';
-    echo Html::dropDownList(
-        'city',
-        $citySlug,
-        ArrayHelper::map($cityList, 'slug', 'name'),
-        ['class' => 'form-select', 'id' => 'citySelectNav']
-    );
-    echo '</div>';
-    echo Html::endTag('div');
+			<!-- Логотип -->
+			<a class="navbar-brand" href="<?= Yii::$app->homeUrl ?>">
+                <?= Html::encode(Yii::$app->params['name']) ?>
+			</a>
 
-    /* — иконка телефона + бургер для мобильных — */
-    echo Html::beginTag('div', ['class' => 'd-lg-none d-flex align-items-center ms-auto']);
+			<!-- 📞 Телефон + 🍔 бургер (только на мобильных) -->
+			<div class="d-lg-none d-flex align-items-center ms-auto">
+				<a href="tel:+78005553535" class="text-warning fs-4 me-3" aria-label="Позвонить">
+					<i class="bi bi-telephone-fill"></i>
+				</a>
+				<button class="navbar-toggler" type="button"
+						data-bs-toggle="collapse"
+						data-bs-target="#mainNav"
+						aria-controls="mainNav"
+						aria-expanded="false"
+						aria-label="Меню">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+			</div>
 
-    echo Html::a(
-        '<i class="bi bi-telephone-fill"></i>',
-        'tel:+78005553535',
-        ['class' => 'text-warning fs-4 me-3', 'aria-label' => 'Позвонить']
-    );
+			<!-- Меню и селектор -->
+			<div class="collapse navbar-collapse" id="mainNav">
 
-//    echo Html::button(
-//        '<span class="navbar-toggler-icon"></span>',
-//        [
-//            'class' => 'navbar-toggler',
-//            'type'  => 'button',
-//            'data-bs-toggle' => 'collapse',
-//            'data-bs-target' => '#w0-collapse',
-//            'aria-controls' => 'w0-collapse',
-//            'aria-expanded' => 'false',
-//            'aria-label' => 'Меню',
-//        ]
-//    );
-    echo Html::endTag('div');
+				<!-- Селектор города -->
+                <?= Html::beginTag('div', ['class' => 'navbar-city-selector mx-3']) ?>
+				<div class="input-group input-group-sm">
+          <span class="input-group-text bg-light text-dark">
+            <i class="bi bi-geo-alt-fill"></i>
+          </span>
+                    <?= Html::dropDownList(
+                        'city',
+                        $citySlug,
+                        ArrayHelper::map($cityList, 'slug', 'name'),
+                        ['class' => 'form-select', 'id' => 'citySelectNav']
+                    ) ?>
+				</div>
+                <?= Html::endTag('div') ?>
 
-    /* — пункты меню — */
-    echo Nav::widget([
-        'options' => ['class' => 'navbar-nav ms-auto align-items-lg-center'],
-        'items'   => [
-            ['label' => 'Услуги',   'url' => ['/site/index#services']],
-            ['label' => 'Города',   'url' => ['/site/index#cities']],
-            ['label' => 'О нас',    'url' => ['/site/about']],
-            ['label' => 'Контакты', 'url' => ['/site/contact']],
-            [
-                'label'       => 'Онлайн‑консультация',
-                'url'         => ['/site/index#hero'],
-                'linkOptions' => ['class' => 'btn btn-warning ms-lg-3 text-dark fw-semibold']
-            ],
-        ],
-    ]);
+				<!-- Пункты меню -->
+                <?= Nav::widget([
+                    'options' => ['class' => 'navbar-nav ms-auto align-items-lg-center'],
+                    'items'   => [
+                        ['label' => 'Услуги',   'url' => ['/site/index#services']],
+                        ['label' => 'Города',   'url' => ['/site/index#cities']],
+                        ['label' => 'О нас',    'url' => ['/site/about']],
+                        ['label' => 'Контакты', 'url' => ['/site/contact']],
+                        [
+                            'label'       => 'Онлайн‑консультация',
+                            'url'         => ['/site/index#hero'],
+                            'linkOptions' => ['class' => 'btn btn-warning ms-lg-3 text-dark fw-semibold']
+                        ],
+                    ],
+                ]) ?>
 
-    NavBar::end();
-    ?>
+			</div><!-- /#mainNav -->
+		</div><!-- /.container-fluid -->
+	</nav>
 </header>
 
 <!-- ===== Main content ===== -->
