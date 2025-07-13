@@ -70,6 +70,7 @@ $this->registerMetaTag(['name' => 'robots', 'content' => 'index,follow']);
 			<div class="mt-5 p-4 advantages-box">
 				<h2 class="h5 mb-3">Преимущества работы с нами</h2>
 				<p><?= Html::encode($body['advantages']) ?></p>
+				<p><?= $body['advantages'] ?></p>
 			</div>
         <?php endif; ?>
 
