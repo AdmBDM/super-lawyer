@@ -40,6 +40,19 @@ $this->title = Yii::$app->params['name'];
 	<title><?= Html::encode($this->title) ?></title>
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
     <?php $this->head() ?>
+
+    <?php
+    $ogTitle       = $this->title ?? Yii::$app->params['name'];
+    $ogDescription = Yii::$app->view->params['meta_description'] ?? Yii::$app->params['description'] ?? '';
+    $ogImage       = Yii::$app->view->params['meta_image'] ?? Url::to('@web/images/og-default.jpg', true);
+    $ogUrl         = Url::to(Yii::$app->request->url, true);
+    ?>
+	<meta property="og:type"        content="website">
+	<meta property="og:title"       content="<?= Html::encode($ogTitle) ?>">
+	<meta property="og:description" content="<?= Html::encode($ogDescription) ?>">
+	<meta property="og:url"         content="<?= Html::encode($ogUrl) ?>">
+	<meta property="og:image"       content="<?= Html::encode($ogImage) ?>">
+
 </head>
 <body>
 <?php $this->beginBody() ?>
