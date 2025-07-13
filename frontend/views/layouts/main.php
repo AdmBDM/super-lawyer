@@ -53,6 +53,16 @@ $this->title = Yii::$app->params['name'];
         'options'    => ['class' => 'navbar navbar-expand-lg navbar-dark bg-dark fixed-top'],
     ]);
 
+    /* — иконка телефона + бургер для мобильных — */
+    echo Html::beginTag('div', ['class' => 'd-lg-none d-flex align-items-center ms-auto']);
+
+    echo Html::a(
+        '<i class="bi bi-telephone-fill"></i>',
+        'tel:+78005553535',
+        ['class' => 'text-warning fs-4 me-3', 'aria-label' => 'Позвонить']
+    );
+    echo Html::endTag('div');
+
     /* — селектор города — */
     echo Html::beginTag('div', ['class' => 'navbar-city-selector mx-3']);
     echo '<div class="input-group input-group-sm">';
@@ -64,29 +74,6 @@ $this->title = Yii::$app->params['name'];
         ['class' => 'form-select', 'id' => 'citySelectNav']
     );
     echo '</div>';
-    echo Html::endTag('div');
-
-    /* — иконка телефона + бургер для мобильных — */
-    echo Html::beginTag('div', ['class' => 'd-lg-none d-flex align-items-center ms-auto']);
-
-    echo Html::a(
-        '<i class="bi bi-telephone-fill"></i>',
-        'tel:+78005553535',
-        ['class' => 'text-warning fs-4 me-3', 'aria-label' => 'Позвонить']
-    );
-
-//    echo Html::button(
-//        '<span class="navbar-toggler-icon"></span>',
-//        [
-//            'class' => 'navbar-toggler',
-//            'type'  => 'button',
-//            'data-bs-toggle' => 'collapse',
-//            'data-bs-target' => '#w0-collapse',
-//            'aria-controls' => 'w0-collapse',
-//            'aria-expanded' => 'false',
-//            'aria-label' => 'Меню',
-//        ]
-//    );
     echo Html::endTag('div');
 
     /* — пункты меню — */
