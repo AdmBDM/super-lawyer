@@ -138,14 +138,6 @@ $ogUrl = Url::to(Yii::$app->request->url, true);
             <?php
             /* JSON‑LD для поисковиков */
             $items = [];
-//            foreach ($this->params['breadcrumbs'] as $pos => $crumb) {
-//                $items[] = [
-//                    '@type'    => 'ListItem',
-//                    'position' => $pos + 1,
-//                    'name'     => $crumb['label'],
-//                    'item'     => Url::to($crumb['url'] ?? Yii::$app->request->url, true),
-//                ];
-//            }
             foreach ($this->params['breadcrumbs'] as $pos => $crumb) {
                 if (is_array($crumb)) {
                     $items[] = [
