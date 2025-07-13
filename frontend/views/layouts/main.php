@@ -75,18 +75,18 @@ $this->title = Yii::$app->params['name'];
         ['class' => 'text-warning fs-4 me-3', 'aria-label' => 'Позвонить']
     );
 
-    echo Html::button(
-        '<span class="navbar-toggler-icon"></span>',
-        [
-            'class' => 'navbar-toggler',
-            'type'  => 'button',
-            'data-bs-toggle' => 'collapse',
-            'data-bs-target' => '#w0-collapse',
-            'aria-controls' => 'w0-collapse',
-            'aria-expanded' => 'false',
-            'aria-label' => 'Меню',
-        ]
-    );
+//    echo Html::button(
+//        '<span class="navbar-toggler-icon"></span>',
+//        [
+//            'class' => 'navbar-toggler',
+//            'type'  => 'button',
+//            'data-bs-toggle' => 'collapse',
+//            'data-bs-target' => '#w0-collapse',
+//            'aria-controls' => 'w0-collapse',
+//            'aria-expanded' => 'false',
+//            'aria-label' => 'Меню',
+//        ]
+//    );
     echo Html::endTag('div');
 
     /* — пункты меню — */
