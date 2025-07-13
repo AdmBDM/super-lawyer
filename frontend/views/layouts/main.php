@@ -41,7 +41,7 @@ $this->title = Yii::$app->params['name'];
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
     <?php $this->head() ?>
 
-    <?php
+<!--    --><?php
 //    $ogTitle       = $this->title ?? Yii::$app->params['name'];
 //    $ogTitle       = $this->title;
 ////    $ogDescription = Yii::$app->view->params['meta_description'] ?? Yii::$app->params['description'] ?? '';
