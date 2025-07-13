@@ -7,12 +7,12 @@ use yii\helpers\Url;
 $this->title = 'О нас';
 $this->params['breadcrumbs'][] = $this->title;
 
-$this->registerMetaTag([
-    'name' => 'description',
-    'content' => 'Официальная информация о сервисе Super‑Lawyer и команде юристов.'
-]);
-Yii::$app->view->params['meta_description'] = 'Официальная информация о сервисе Super‑Lawyer и команде юристов.';
-Yii::$app->view->params['meta_image'] = Url::to('@web/images/about-og.jpg', true);
+//$this->registerMetaTag([
+//    'name' => 'description',
+//    'content' => 'Официальная информация о сервисе Super‑Lawyer и команде юристов.'
+//]);
+//Yii::$app->view->params['meta_description'] = 'Официальная информация о сервисе Super‑Lawyer и команде юристов.';
+//Yii::$app->view->params['meta_image'] = Url::to('@web/images/about-og.jpg', true);
 
 ?>
 
