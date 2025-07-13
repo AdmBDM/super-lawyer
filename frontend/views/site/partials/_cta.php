@@ -24,7 +24,7 @@ $cityPrep = Html::encode($city->dative ?: $city->name);
         <a href="#contact" class="btn btn-warning text-dark fw-semibold me-2">
             Оставить заявку
         </a>
-        <a href="tel:+78005553535" class="btn btn-outline-primary">
+        <a href="tel:<?= Yii::$app->params['mainPhone'] ?>" class="btn btn-outline-primary">
             Позвонить
         </a>
     </div>

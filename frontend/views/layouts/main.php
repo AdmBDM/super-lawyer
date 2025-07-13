@@ -42,7 +42,8 @@ $this->title = Yii::$app->params['name'];
     <?php $this->head() ?>
 
     <?php
-    $ogTitle       = $this->title ?? Yii::$app->params['name'];
+//    $ogTitle       = $this->title ?? Yii::$app->params['name'];
+    $ogTitle       = $this->title;
     $ogDescription = Yii::$app->view->params['meta_description'] ?? Yii::$app->params['description'] ?? '';
     $ogImage       = Yii::$app->view->params['meta_image'] ?? Url::to('@web/images/og-default.jpg', true);
     $ogUrl         = Url::to(Yii::$app->request->url, true);
@@ -69,7 +70,7 @@ $this->title = Yii::$app->params['name'];
 
 			<!-- Телефон + бургер (только на мобилках) -->
 			<div class="d-flex d-lg-none align-items-center ms-auto">
-				<a href="tel:+78005553535" class="text-warning fs-4 me-3" aria-label="Позвонить">
+				<a href="tel:<?= Yii::$app->params['mainPhone'] ?>" class="text-warning fs-4 me-3" aria-label="Позвонить">
 					<i class="bi bi-telephone-fill"></i>
 				</a>
 				<button class="navbar-toggler" type="button"
