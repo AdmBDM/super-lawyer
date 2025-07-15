@@ -1,0 +1,29 @@
+.about-page {
+	.fade-in {
+		opacity: 0;
+		transform: translateY(20px);
+		animation: fadeInUp 0.8s ease forwards;
+	}
+	.advantage-card {
+		background: #fff;
+		border-radius: 0.75rem;
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+		transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+		&:hover {
+			transform: translateY(-4px);
+			box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+		}
+	}
+	.consultation-card {
+		border-radius: 0.75rem;
+		background: #f9fafb;
+	}
+}
+
+@keyframes fadeInUp {
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}

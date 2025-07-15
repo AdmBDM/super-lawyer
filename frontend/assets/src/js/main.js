@@ -4,12 +4,17 @@ document.addEventListener("DOMContentLoaded", function () {
 	const citySelect = document.getElementById('citySelectNav');
 	const btnService = document.getElementById('toggleServicesBtn');
 	const btnCities = document.getElementById('toggleCitiesBtn');
+	const elements = document.querySelectorAll('.fade-in');
 
 	let collapseTimeout = 350;
 	let txtClose = 'Скрыть ';
 	let txtOpen = 'Показать все ';
 	let txtService = 'услуги';
 	let txtCity = 'города';
+
+	elements.forEach((el, index) => {
+		el.style.animationDelay = `${index * 0.2}s`;
+	});
 
 	if (burger && nav) {
 		burger.addEventListener('click', () => {
