@@ -71,6 +71,13 @@ class SiteController extends Controller
      */
     public function beforeAction($action): bool
     {
+        // Проверяем, что запрашивают главную страницу (пустой pathInfo)
+        if (Yii::$app->request->getPathInfo() === '' && !Yii::$app->session->has('visited')) {
+            Yii::$app->session->set('visited', true); // помечаем первый визит
+            Yii::$app->response->redirect(['site/about'])->send();
+            return false; // прерываем выполнение index
+        }
+
         /* 1. Получаем slug из cookies */
         $slug = Yii::$app->request->cookies->getValue('city', null);
 
