@@ -16,7 +16,7 @@ use yii\helpers\Html;
 <!--		<a href="#services" class="btn btn-warning btn-lg">-->
 <!--			Получить консультацию-->
 <!--		</a>-->
-		<div class="d-flex flex-column flex-md-row gap-3 mt-4">
+		<div class="d-flex flex-column flex-md-row gap-3 justify-content-center mt-4">
 			<!-- Кнопка звонка -->
 			<a href="tel:+78005553535" class="btn btn-warning btn-lg text-dark fw-semibold shadow">
 				<i class="bi bi-telephone-fill me-2"></i> Получить консультацию
