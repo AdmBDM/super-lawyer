@@ -108,7 +108,7 @@ $ogUrl = Url::to(Yii::$app->request->url, true);
                         ['label' => 'Услуги',   'url' => ['/site/index#services']],
                         ['label' => 'Города',   'url' => ['/site/index#cities']],
                         ['label' => 'О нас',    'url' => ['/site/about']],
-                        ['label' => 'Контакты', 'url' => ['/site/contact']],
+//                        ['label' => 'Контакты', 'url' => ['/site/contact']],
                         [
                             'label'       => 'Онлайн‑консультация',
                             'url'         => ['/site/index#hero'],
