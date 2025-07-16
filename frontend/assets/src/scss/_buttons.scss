@@ -1,0 +1,27 @@
+.btn-vk {
+	background-color: #4c75a3;
+	color: #fff;
+	border: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	transition: all 0.3s ease;
+
+	i {
+		font-size: 1.2rem;
+	}
+
+	&:hover,
+	&:focus {
+		background-color: #3b5c82;
+		color: #fff;
+		text-decoration: none;
+		transform: translateY(-2px);
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+	}
+
+	&:active {
+		transform: translateY(0);
+		box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+	}
+}
